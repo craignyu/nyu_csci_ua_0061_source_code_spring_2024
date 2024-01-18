@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-us">
+	<head>
+		<title>CSS IDs, Classes & Contextual Selectors</title>
+		<meta charset="utf-8">
+
+		<style type="text/css">
+			/* all elements with a class of pikachu should look this way */
+			.pikachu {
+				background-color: yellow;
+				color: black;
+			}
+
+			/* all charmander elements should look this way */
+			.charmander {
+				background-color: red;
+				color: white;
+			}
+
+			/* text centered class */
+			.middle {
+				text-align: center;
+			}
+
+			/* only the ONE element on the page with this ID will get this rule */
+			#squirtle {
+				background-color: blue;
+				color: white;
+			}
+
+			/* contextual selector (all 'a' tags inside of an element with a class of '.pikachu') */
+			.pikachu a {
+				font-size: 200%;
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+		<h1>CSS IDs, Classes & Contextual Selectors</h1>
+
+		<!-- classes -->
+		<p class="pikachu">Paragraph #1 (class=pikachu)</p>
+		<p class="pikachu">Paragraph #2 (class=pikachu)</p>
+		<p class="charmander">Paragraph #3 (class=charmander)</p>
+		<p class="charmander">Paragraph #4 (class=charmander)</p>
+
+		<!-- multiple classes assigned -->
+		<p class="charmander middle">Paragraph #4 (class=charmander and middle)</p>
+
+		<!-- ids and classes -->
+		<p id="squirtle" class="middle">Paragraph #5 (id=squirtle; class=middle)</p>
+
+		<!-- contextual selectors -->
+		<p class="pikachu">
+			<a href="#">Click here!</a>
+		</p>
+
+		<!-- contextual selector won't be applied here -->
+		<p class="charmander">
+			<a href="#">Click here!</a>
+		</p>
+
+	</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en-us">
+	<head>
+		<title>CSS Positioning: Flex</title>
+		<meta charset="utf-8">
+		<style type="text/css">
+
+			.unit {
+				background-color: #eee;
+				border: 1px solid black;
+				box-sizing: border-box;
+			}
+
+
+
+			#flex_container_1 {
+				display: flex;
+			}
+
+
+
+			#flex_container_2 {
+				display: flex;
+				flex-direction: column;
+			}
+
+
+
+			#flex_container_3 {
+				display: flex;				
+			}
+
+			#flex_container_3 > div {
+				flex: 1 1 0%;
+			}
+
+
+
+			#flex_container_4 {
+				display: flex;				
+			}
+
+			#flex_container_4 > div {
+				flex: 1 1 0%;
+			}
+
+
+
+			#flex_container_5 {
+				display: flex;
+				flex-wrap: wrap;				
+			}
+
+			#flex_container_5 > div {
+				flex: 1 1 50%;
+			}
+
+		</style>
+	</head>
+	<body>
+        <h1>CSS Positioning: Flex</h1>
+
+		<!-- no flex display property (for reference) -->
+		<div id="flex_container_0">
+			<div class="unit">Container 0 - A</div>
+			<div class="unit">Container 0 - B</div>
+			<div class="unit">Container 0 - C</div>
+			<div class="unit">
+				Container 0 - D<br>
+				Container 0 - D<br>
+				Container 0 - D<br>
+			</div>
+		</div>
+
+		<hr>
+
+		<!-- display using the 'flex' property - elements will by default collapse to their smallest possible width and height values, and will be oriented horizontally in a row -->
+		<div id="flex_container_1">
+			<div class="unit">Container 1 - A</div>
+			<div class="unit">Container 1 - B</div>
+			<div class="unit">Container 1 - C</div>
+			<div class="unit">
+				Container 1 - D<br>
+				Container 1 - D<br>
+				Container 1 - D<br>
+			</div>
+		</div>
+
+
+		<hr>
+
+		<!-- display using the 'flex' property - these elements are oriented in a column rather than a row by setting the 'flex-direction' property -->
+		<div id="flex_container_2">
+			<div class="unit">Container 2 - A</div>
+			<div class="unit">Container 2 - B</div>
+			<div class="unit">Container 2 - C</div>
+			<div class="unit">
+				Container 2 - D<br>
+				Container 2 - D<br>
+				Container 2 - D<br>
+			</div>
+		</div>
+
+		<hr>
+
+		<!-- display using the 'flex' property - each child element has the 'flex' property set which defines the desired width and height of the elements. we use relative sizing here (e.g. flex: 1 1 0%) to say 'each unit should have an equal width and an equal height' -->
+		<div id="flex_container_3">
+			<div class="unit">Container 2 - A</div>
+			<div class="unit">Container 2 - B</div>
+			<div class="unit">Container 2 - C</div>
+			<div class="unit">
+				Container 2 - D<br>
+				Container 2 - D<br>
+				Container 2 - D<br>
+			</div>
+		</div>
+
+		<hr>
+
+		<!-- display using the 'flex' property - each child element has the 'flex' property set which defines the desired width and height of the elements.  we override the first element to say it should be twice as large as all of the other elements -->
+		<div id="flex_container_4">
+			<div class="unit" style="flex: 2 1 0;">Container 4 - A</div>
+			<div class="unit">Container 4 - B</div>
+			<div class="unit">Container 4 - C</div>
+			<div class="unit">
+				Container 4 - D<br>
+				Container 4 - D<br>
+				Container 4 - D<br>
+			</div>
+		</div>
+
+		<hr>
+
+		<!-- display using the 'flex' property along with the 'flex-wrap' rule - this allows child elements to multiple lines.  we can then apply a default size to each of the child elements (e.g., 'flex: 1 1 50%') to say that each element should take up 50% of the width of the container, thus creating a 2 column layout -->
+		<div id="flex_container_5">
+			<div class="unit">Container 5 - A</div>
+			<div class="unit">Container 5 - B</div>
+			<div class="unit">Container 5 - C</div>
+			<div class="unit">
+				Container 5 - D<br>
+				Container 5 - D<br>
+				Container 5 - D<br>
+			</div>
+		</div>
+
+	</body>
+</html>

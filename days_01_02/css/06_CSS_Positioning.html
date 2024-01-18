@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en-us">
+	<head>
+		<title>CSS Positioning</title>
+		<meta charset="utf-8">
+		<style type="text/css">
+			.greybox {
+				width: 100px;
+				height: 100px;
+				border: 1px solid black;
+				padding: 5px;
+				background-color: #eee;
+			}
+
+			#two {
+				position: relative;
+				left: 200px;
+			}
+
+			#four {
+				position: absolute;
+				left: 300px;
+			}
+
+			#six {
+				position: fixed;
+				bottom: 0px;
+				right: 0px;
+			}
+
+			.container_box {
+				width: 200px;
+				height: 200px;
+				border: 1px solid black;
+				background-color: #ddd;
+			}
+
+			#eight {
+				position: absolute;
+				top: 0px;
+				right: 0px;
+			}
+
+			#container_box_2 {
+				position: relative;
+			}
+
+			#nine {
+				position: absolute;
+				top: 0px;
+				right: 0px;
+			}
+
+		</style>
+	</head>
+	<body>
+        <h1>CSS Positioning</h1>
+
+		<!-- static positioning (normal flow)-->
+		<div id="one" class="greybox">Div 1: static positioning</div>
+
+		<!-- relative positioning: we can "nudge" the element out of normal flow.  we do this using the 'top', 'bottom', 'left', and 'right' properties to specify where the box should appear relative to its original position.  space is reserved for where the element would have existed on the page. -->
+		<div id="two" class="greybox">Div 2: relative positioning</div>
+
+		<!-- static positioning (normal flow)-->
+		<div id="three" class="greybox">Div 3: static positioning</div>
+
+		<!-- absolute positioning: take the element out of "normal flow" and put it somwhere else. we do this using the 'top', 'bottom', 'left', and 'right' properties to specify where the box should appear relative to its parent's position (in this case, the body of the document). space is not reserved for the element and elements below collapse into the space vacated by this element. -->
+		<div id="four" class="greybox">Div 4: absolute positioning</div>
+
+		<!-- static positioning (normal flow)-->
+		<div id="five" class="greybox">Div 5: static positioning</div>
+
+		<!-- fixed positioning: take the element out of "normal flow" and put it somwhere else. we do this using the 'top', 'bottom', 'left', and 'right' properties to specify where the box should appear relative to the browser window. space is not reserved for the element and elements below collapse into the space vacated by this element. note how this element scrolls with the page (unlike div 'eight' below which is absolutely positioned) -->
+		<div id="six" class="greybox">Div 6: fixed positioning</div>
+
+		<!-- static positioning (normal flow)-->
+		<div id="seven" class="greybox">Div 7: static positioning</div>
+
+
+		<!-- static positioning (normal flow)-->
+		<div id="container_box_1" class="container_box">
+
+			<!-- absolute positioning: this div wants to move to the top-right side of its parent div, but it won't (it actually appears at the top right side of the page) - this is because of how positioning works when it comes to child and parent elements.  For absolute positioning the child element looks to its parent and tries to figure out its position on the page.  since the parent element does not have an explicit position specified (it's statically positioned) the child will go up to the next element (in this case, the body of the document) and try and obtain its position.  it will continue doing this until a reference position is found.  the body tag always has a reference position, so this is why this div appears at the very top right side of the overall page. -->
+			<div id="eight" class="greybox">Div 8: absolute positioning</div>
+
+		</div>
+
+
+		<!-- relative positioning -->
+		<div id="container_box_2" class="container_box">
+
+			<!-- absolute positioning: this div wants to move to the top-right side of its parent div, and it will!  this is because the parent div has a position property attached to it (in this case, relative positioning).  this doesn't move the parent div at all, but it gives it the ability to remember its position on the page and thus inform its children when they need to position themselves. -->
+			<div id="nine" class="greybox">Div 9: absolute positioning</div>
+
+		</div>
+
+
+	</body>
+</html>

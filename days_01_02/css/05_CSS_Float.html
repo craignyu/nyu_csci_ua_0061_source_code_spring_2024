@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-us">
+	<head>
+		<title>CSS Float Property</title>
+		<meta charset="utf-8">
+		<style type="text/css">
+
+			.greybox {
+				width: 400px;
+				height: 100px;
+				background: #EEE;
+				margin: 10px;
+			}
+
+			.floatleft {
+				float: left;
+			}
+
+			.floatright {
+				float: right;
+			}
+
+			.clear {
+				clear: both;
+			}
+
+			.yellowbox {
+				background-color: yellow;
+				margin-bottom: 10px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<h1>CSS Float Property</h1>
+
+		<div id="div1" class="greybox">This div is in the normal flow of the document</div>
+		<div id="div2" class="greybox floatleft">This div floats as far to the left as it possibly can.</div>
+		<div id="div3" class="greybox floatleft">This div also floats as far to the left as possible</div>
+		<div id="div4" class="greybox floatleft">So does this one.  Try resizing the browser down to see what happens.</div>
+
+		<br class="clear">
+
+		<div id="div5" class="greybox">This div is back into the normal flow.  It has a 'br' tag above that uses the "clear" property to tell the browser to stop floating.  Clear tells the browser to calculate the amount of space used by the floating elements above it and will resume normal flow.</div>
+
+		<div id="div6" class="greybox floatright">This div is floated right</div>
+		<div id="div7" class="greybox floatright">As is this one</div>
+
+		<br class="clear">
+
+		<div id="div8" class="greybox">Another "clear" 'br' tag was used above to stop the floating.</div>
+
+		<div id="div6" class="yellowbox">
+			<div id="div7" class="greybox floatleft">We can also float inside other containers.  This div is floated left inside of a yellowbox</div>
+			<div id="div8" class="greybox floatleft">Floated left inside of a yellowbox as well</div>
+			<br class="clear">
+		</div>
+
+		<div id="div6" class="yellowbox">
+			<div id="div7" class="greybox floatleft">Floated left inside of a yellowbox</div>
+			<div id="div8" class="greybox floatright">Floated right inside of a yellowbox</div>
+			<br class="clear">
+		</div>
+
+
+		<div id="div9" class="yellowbox">
+			<div id="div10" class="greybox floatleft">Floated left inside of a yellowbox</div>
+			<div id="div11" class="greybox floatright">Floated right inside of a yellowbox. Wait, where did 'yellowbox' go?  We never called clear afterwards, so the browser actually has no idea how tall yellowbox should be. We need to use the <code>clear</code> property to return to "normal flow" and have the browser calculate how high to make yellowbox in this case.</div>
+		</div>
+
+
+
+
+	</body>
+</html>

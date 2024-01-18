@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-us">
+	<head>
+		<title>CSS Embedded Styles</title>
+		<meta charset="utf-8">
+
+		<style type="text/css">
+			/* all p tags will have a pink background */
+			p {
+				background-color: pink;
+			}
+
+			/* all h1 tags will have a black background with a yellow font color */
+			h1 {
+				background-color: black;
+				color: yellow;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<h1>CSS Embedded Styles</h1>
+
+		<p>Paragraph #1</p>
+		<p>Paragraph #2</p>
+
+		<!-- conflicting style! the most specific style wins.  in this case an inline style is much more specific than an embedded style since it only applies to this one element, so it takes precedence -->
+		<p style="background-color: #0f0;">Paragraph #3</p>
+
+	</body>
+
+</html>

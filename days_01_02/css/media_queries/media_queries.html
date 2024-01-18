@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-us">
+	<head>
+		<title>Media Queries</title>
+		<meta charset="utf-8">
+
+		<!-- Media query for narrow browser width -->
+		<link rel="stylesheet" media="only screen and (max-width: 480px)" href="styles1/small.css" />
+
+		<!-- Media query for medium browser width -->
+		<link rel="stylesheet" media="only screen and (min-width: 481px) and (max-width: 960px)" href="styles1/medium.css" />
+
+		<!-- Media query for full browser width -->
+		<link rel="stylesheet" media="only screen and (min-width: 961px)" href="styles1/large.css" />
+
+		<!-- Media query for smartphones -->
+		<link rel="stylesheet" media="only screen and (max-device-width: 568px)" href="styles1/small.css" />
+
+		<!-- Media query for tablets -->
+		<link rel="stylesheet" media="only screen and (min-device-width : 768px) and (max-device-width : 1024px)" href="styles1/medium.css" />
+
+		<!-- Media query for print -->
+		<link rel="stylesheet" media="print" href="styles1/print.css" />
+
+		<!-- Prevent smartphones from scaling pages down -->
+		<meta name="viewport" content="initial-scale=1">
+
+	</head>
+	<body>
+		<h1>Media Queries</h1>
+
+		<div id="reporter"></div>
+
+		<p>A media query is a way for you to ask the browser to load in a specific set of styles based upon the amount of space available to you in the browser's viewport.  Media queries are generally designed to trigger rules stored in different CSS files based on the browser's width.</p>
+
+		<p>This page is designed to use one of three style sheets based on the width of the browser.  We have three stylesheets named "small.css", "medium.css" and "large.css".  These sheets are "conditionally attached" to this document using a media query, which basically asks the browser how big it is and then gives it the rules that are designed for that size.  Go ahead and resize the browser to see this in action.</p>
+
+		<p>Media queries go in the head of the HTML document.  The basic syntax for a media query is as follows:
+
+		<pre>
+
+&lt;!-- Media query for narrow browser width --&gt;
+&lt;link rel="stylesheet" media="only screen and (max-width: 480px)" href="mobile.css"&gt;
+
+&lt;!-- Media query for medium browser width --&gt;
+&lt;link rel="stylesheet" media="only screen and (min-width: 481px) and (max-width: 960px)" href="tablet.css"&gt;
+
+&lt;!-- Media query for full browser width --&gt;
+&lt;link rel="stylesheet" media="only screen and (min-width: 961px)" href="desktop.css"&gt;
+
+		</pre>
+
+		Note that the media queries above will be dynamically evaluated as the browser is resized - as the browser size changes the queries will be re-evaluated and the correct rules will be put in place accordingly.</p>
+
+		<p class="pagebreak">For mobile devices we need to add in another rule to help make things show up smoothly by preventing the mobile device from scaling the page to fit on the screen when it loads.</p>
+		<pre>
+
+&lt;!-- Prevent smartphones from scaling pages down --&gt;
+&lt;meta name="viewport" content="initial-scale=1"&gt;
+
+		</pre>
+
+		<p class="pagebreak">You can also specify CSS rules for non-screen delivery. For example, you can create a stylesheet that should be used when the user chooses to print out your website.  You can specify this kind of media query by using the following syntax:</p>
+
+		<pre>
+&lt;!-- Media query for print --&gt;
+&lt;link rel="stylesheet" media="print" href="styles1/print.css" /&gt;
+		</pre>
+
+		<p>In print-based stylesheets you can use two special properties - 'page-break-before' and 'page-break-after' to force the user's printer to start a new sheet of paper.  See the '<a href="styles1/print.css">styles1/print.css</a>' file for an example of this.
+
+
+	</body>
+</html>
