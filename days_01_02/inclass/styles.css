@@ -1,0 +1,15 @@
+p {
+    font-size: 200%;
+}  
+#second {
+    font-family: monospace;
+}          
+.redbg {
+    background-color: #f00;
+}
+.whitefg {
+    color: #fff;
+}
+.pretty {
+    font-family: fantasy;
+}

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Intro to JavaScript</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Intro to JavaScript</h1>
+
+    <script>
+
+      /*
+      In JavaScript the keyword that you attach to a variable denotes its behavior and scope in your program. Here's a quick rundown of how this works - note that we will revisit this as we progress through the class as there are some nuances here that won't make sense until we get into more advanced JavaScript techniques.
+
+      The var keyword scopes a variable to a function. This means that the variable is available within the most recently open function (curly braces). If the variable is not defined inside of a function (i.e. it's just inside of a script tag) it will be considered globally scoped. This is more or less how languages like Python treat their variables. For example:
+      */
+
+      var a = "outside";
+
+      function doSomething() {
+        var b = "function";
+
+        console.log("a:", a);   // outside
+        console.log("b:", b);   // function
+
+        if (true) {
+          var c = "ifstatement";
+          console.log("a", a);  // outside
+          console.log("b", b);  // function
+          console.log("c", c);  // ifstatement
+        }
+
+        console.log("c", c);  // ifstatement
+      }
+
+      doSomething();
+
+      /*
+      The let keyword, however, scopes variables to a block (an set of curly braces). If the variable is not defined inside of a function (i.e. it's just inside of a script tag) it will be considered globally scoped. This is more or less how languages like Java treat their variables. For example:
+      */
+
+      let a2 = "outside";
+
+      function doSomething2() {
+        let b2 = "function";
+
+        console.log("a2:", a2);   // outside
+        console.log("b2:", b2);   // function
+
+        if (true) {
+          let c2 = "ifstatement";
+          console.log("a2", a2);  // outside
+          console.log("b2", b2);  // function
+          console.log("c2", c2);  // ifstatement
+        }
+
+        //console.log("c2", c);  // ReferenceError: c is not defined
+      }
+
+      doSomething2();
+
+      /*
+      The const keyword works exactly like the let keyword (block scoped) but with one major difference - const variables cannot be changed once they have been assigned a value. They are considered 'read-only' bindings.
+      This means that the binding cannot be re-assigned, thus making immutable objects 'read-only'
+      Mutable objects, like arrays, can be changed, but the binding cannot change to a different array
+      */
+
+      const a3 = "outside";
+      //a3 = "pikachu!";		// TypeError: Assignment to constant variable
+
+      const a4 = [10,20,30];
+      a4[0] = 999; // valid!
+      console.log(a4)
+
+      // TypeError: Assignment to constant variable
+      //a4 = [300,400,500] // invalid - binding cannot change to a new array
+
+    </script>
+
+  </body>
+</html>
