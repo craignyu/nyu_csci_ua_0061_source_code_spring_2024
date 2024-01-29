@@ -3,21 +3,30 @@
     <head>
         <title>In class</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="styles.css">
         <style>
             p {
-                background-color: orange;
                 font-size: 200%;
             }  
             #second {
-                font-family: fantasy;
+                font-family: monospace;
             }          
+            .redbg {
+                background-color: #f00;
+            }
+            .whitefg {
+                color: #fff;
+            }
+            .pretty {
+                font-family: fantasy;
+            }
         </style>
     </head>
     <body>
         <h1>In class</h1>
         <p style="background-color: yellow;">P tag #1</p>
-        <p id="second">P tag #2</p>
-        <p>P tag #3</p>
-        <p>P tag #4</p>
+        <p class="pretty" id="second">P tag #2</p>
+        <p class="redbg whitefg">P tag #3</p>
+        <p class="redbg">P tag #4</p>
     </body>
 </html>
