@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Intro to the DOM</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+        font-size: 120%;
+      }
+      .tab {
+        display: inline-block;
+        width: 150px;
+        height: 50px;
+        text-align: center;
+        border: 1px solid grey;
+        border-bottom: none;
+        border-radius: 10px 10px 0px 0px;
+        box-sizing: border-box;
+        padding-top: 15px;
+      }
+      .tab:hover {
+        background-color: #ffe57e;
+      }
+
+      #tabAbout {
+        border-right: none;
+        border-width: 2px;
+      }
+
+      .content {
+        border-top: 1px dotted grey;
+        padding: 10px;
+      }
+
+      #contentContact {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h1>Programming Challenge</h1>
+
+    <div id="header">
+      <div id="tabAbout" class="tab">About Us</div>
+      <div id="tabContact" class="tab">Contact</div>
+    </div>
+    <div id="main">
+      <div id="contentAbout" class="content">
+        <h3>About Us</h3>
+        <p>Thanks for visiting our site!</p>
+        <img src="images/pikachu.png">
+      </div>
+      <div id="contentContact" class="content">
+        <h3>Contact</h3>
+        <p>E-mail us at foo@bar.com</p>
+        <img src="images/charmander.png">
+      </div>
+    </div>
+
+
+    <script src="06_ProgrammingChallenge.js"></script>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Intro to the DOM</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      #container {
+        position: relative;
+        width: 500px;
+        height: 200px;
+        border: 1px solid black;
+        margin: auto;
+      }
+
+      #pikachu {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 0px;
+        left: 250px;
+      }
+
+      #controls {
+        width: 200px;
+        height: 200px;
+        text-align: center;
+        float: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Moving An Image</h1>
+
+    <div id="controls">
+      <button id="btnUp">Up</button>
+      <br>
+      <button id="btnLeft">Left</button>
+      <button id="btnRight">Right</button>
+      <br>
+      <button id="btnDown">Down</button>
+    </div>
+
+    <div id="container">
+      <img id="pikachu" src="images/pikachu.png">
+    </div>
+
+    <script>
+      // get some DOM references to our HTML elements
+      const btnLeft = document.querySelector('#btnLeft');
+      const btnRight = document.querySelector('#btnRight');
+      const btnUp = document.querySelector('#btnUp');
+      const btnDown = document.querySelector('#btnDown');
+      const pikachu = document.getElementById('pikachu');
+
+      // global variable to keep track of Pikachu's current position
+      // store this as an integer so we can make changes to it
+      let currentLeft = 250;
+      let currentTop = 0;
+
+      // move pikachu based on the button pressed
+      btnLeft.onclick = function() {
+        // make sure we haven't hit the bounds of the play area
+        if (currentLeft > 0) {
+          // update global variable (integer)
+          currentLeft -= 50;
+
+          // update the element's style (string) - note the use of the 'px' unit string
+          pikachu.style.left = currentLeft + 'px';
+        }
+      }
+
+      btnRight.onclick = function() {
+        // make sure we haven't hit the bounds of the play area
+        if (currentLeft < 450) {
+          // update global variable (integer)
+          currentLeft += 50;
+
+          // update the element's style (string) - note the use of the 'px' unit string
+          pikachu.style.left = currentLeft + 'px';
+        }
+      }
+
+      btnUp.onclick = function() {
+        // make sure we haven't hit the bounds of the play area
+        if (currentTop > 0) {
+          // update global variable (integer)
+          currentTop -= 50;
+
+          // update the element's style (string) - note the use of the 'px' unit string
+          pikachu.style.top = currentTop + 'px';
+        }
+      }
+
+      btnDown.onclick = function() {
+        // make sure we haven't hit the bounds of the play area
+        if (currentTop < 150) {
+          // update global variable (integer)
+          currentTop += 50;
+
+          // update the element's style (string) - note the use of the 'px' unit string
+          pikachu.style.top = currentTop + 'px';
+        }
+      }
+
+    </script>
+
+  </body>
+</html>
