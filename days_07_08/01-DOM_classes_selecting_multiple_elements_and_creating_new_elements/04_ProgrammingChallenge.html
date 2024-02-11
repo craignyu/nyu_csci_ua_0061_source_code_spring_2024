@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+        background-image: url('images/donut_background1.jpg');
+      }
+
+      #container {
+        width: 90%;
+        margin: auto;
+      }
+
+      h1 {
+        text-align: center;
+        text-shadow: 3px 3px #fff;
+        font-size: 300%;
+      }
+
+      .tab {
+        width: 200px;
+        height: 50px;
+        border-right: 1px solid #eee;
+        border-radius: 20px 20px 0px 0px;
+        border-bottom: none;
+        text-align: center;
+        float: left;
+        padding-top: 15px;
+        box-sizing: border-box;
+        background-color: #eee;
+      }
+
+      .tab:hover {
+        background-color: #fff;
+      }
+
+      .active {
+        background-color: #fff;
+      }
+
+      #tabs {
+        user-select: none;
+      }
+
+      .content {
+        padding: 15px;
+        background-color: white;
+        min-height: 500px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h1>All About Donuts</h1>
+
+    <div id="container">
+      <div id="tabs">
+        <div id="tabWelcome" class="tab active">Welcome</div>
+        <div id="tabTraditional" class="tab">Traditional Donus</div>
+        <div id="tabGlazed" class="tab">Glazed Donus</div>
+        <br style="clear: both;">
+      </div>
+
+      <div id="content">
+        <div id="contentWelcome" class="content">
+          Welcome to my 'All About Donuts' page!
+        </div>
+        <div id="contentTraditional" class="content hidden">
+          The traditional dount is a time-honored classic.
+        </div>
+        <div id="contentGlazed" class="content hidden">
+          The glazed donut can be filled with creme or jelly. Either way it's delicious.
+          <div class="imagecontainer">
+            <img src="images/homer.jpg">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="04_ProgrammingChallenge.js"></script>
+  </body>
+</html>

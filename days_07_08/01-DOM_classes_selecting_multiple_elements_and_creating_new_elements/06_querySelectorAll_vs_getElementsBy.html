@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style>
+      .box {
+        width: 50px;
+        height: 50px;
+        background-color: orange;
+        margin: 5px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Intro to the DOM</h1>
+    <button id="make_box">Make a box</button>
+    <div id="container">
+      <div class="box"></div>
+    </div>
+    <div id="results"></div>
+
+    <script>
+      // get a listing of all elements on the page that are of class
+      // 'box' -- currently there is 1 element on the page that
+      // matches this criteria when the page loads
+      const allBoxesQuerySelectorAll = document.querySelectorAll('.box');
+      const allBoxesGetElementsByClassName = document.getElementsByClassName('box');
+
+      // show this info visually to the user
+      displayResults();
+
+      // every time we click on the button we will create a new .box element
+      document.getElementById('make_box').onclick = function() {
+        const newBox = document.createElement('div');
+        newBox.classList.add('box');
+        document.getElementById('container').appendChild(newBox);
+
+        // display the current results from both querys that were
+        // executed when the page loaded -- note how the results
+        // returned from querySelectorAll stay 'static' but the
+        // results returned by 'getElementsByClassName' are dynamically
+        // updated even though the query is not re-executed
+        displayResults();
+      }
+
+      // displays the current # of elements on the page
+      function displayResults() {
+        document.getElementById('results').innerHTML += `QSA: are ${allBoxesQuerySelectorAll.length} elements on the page<br>`;
+        document.getElementById('results').innerHTML += `GEBCN: are ${allBoxesGetElementsByClassName.length} elements on the page<br>`;
+      }
+
+    </script>
+
+
+  </body>
+</html>

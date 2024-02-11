@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style>
+      #outer_container {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        background-color: #eee;
+        float: left;
+        margin-right: 20px;
+      }
+
+      #inner_container {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        background-color: #ccc;
+      }
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+
+      #instructions {
+        float: left;
+        width: 500px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h1>JavaScript Event Mechanics: Stopping Event Propagation</h1>
+
+    <div id="outer_container">
+      <div id="inner_container">
+        <img src="images/pikachu.png">
+      </div>
+    </div>
+
+    <div id="instructions">
+      <p>Any element in the bubbling "chain" can prevent elements above it from receiving the event.  You can do this using the "stopPropagation" function which is available via the 'event' object.  In the example here the image will prevent the event from bubbling up to the inner and outer containers. The organization of the code is as follows:</p>
+
+      <pre>&lt;div id="outer_container"&gt;
+  &lt;div id="inner_container"&gt;
+    &lt;img src="images/pikachu.png"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      
+      <br>
+
+      <button id="clear">Clear results</button>
+      <div id="results"></div>
+    </div>
+
+
+    <script>
+
+      // DOM references to all of the elements on the page
+      const outer_container = document.querySelector('#outer_container');
+      const inner_container = document.querySelector('#inner_container');
+      const image = document.querySelector('img');
+      const results = document.querySelector('#results');
+
+      // set up each element to listen for clicks (except for results)
+      outer_container.onclick = function(event) {
+        results.innerHTML += 'Outer container was clicked<br>';
+      }
+
+      inner_container.onclick = function(event) {
+        results.innerHTML += 'Inner container was clicked<br>';
+      }
+
+      image.onclick = function(event) {
+        results.innerHTML += 'Image was clicked<br>';
+
+        // prevent the event from bubbling up the chain
+        event.stopPropagation();
+      }
+
+
+      // clear previous results
+      document.querySelector("#clear").onclick = function() {
+        results.innerHTML = '';
+      }
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      .slot {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        margin-left: 5px;
+        margin-right: 5px;
+        float: left;
+        box-sizing: border-box;
+      }
+      #chosen {
+        width:330px;
+        margin: auto;
+      }
+
+      .tile {
+        width: 98px;
+        height: 98px;
+      }
+      .tile:hover {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Pokemon Lineup!</h1>
+
+    <p>Instructions: Select a party of 3 Pokemon from the available Pokemon below. You can only have one of each type of Pokemon in your party.</p>
+
+    <div id="chosen">
+      <div id="slot1" class="slot"></div>
+      <div id="slot2" class="slot"></div>
+      <div id="slot3" class="slot"></div>
+      <br style="clear: both;">
+    </div>
+
+    <div id="available">
+      <img src="images/arcanine.png" class="tile">
+      <img src="images/beedrill.png" class="tile">
+      <img src="images/bellsprout.png" class="tile">
+      <img src="images/bulbasaur.png" class="tile">
+      <img src="images/butterfree.png" class="tile">
+      <img src="images/caterpie.png" class="tile">
+      <img src="images/chansey.png" class="tile">
+      <img src="images/charmander.png" class="tile">
+      <img src="images/clefairy.png" class="tile">
+      <img src="images/eevee.png" class="tile">
+      <img src="images/eggsecute.png" class="tile">
+      <img src="images/ekans.png" class="tile">
+      <img src="images/electrabuzz.png" class="tile">
+      <img src="images/gengar.png" class="tile">
+      <img src="images/gloom.png" class="tile">
+      <img src="images/goldeen.png" class="tile">
+      <img src="images/horsea.png" class="tile">
+      <img src="images/jigglypuff.png" class="tile">
+      <img src="images/koffing.png" class="tile">
+      <img src="images/krabby.png" class="tile">
+      <img src="images/lapras.png" class="tile">
+      <img src="images/machop.png" class="tile">
+      <img src="images/magikarp.png" class="tile">
+      <img src="images/meowth.png" class="tile">
+      <img src="images/oddish.png" class="tile">
+      <img src="images/paras.png" class="tile">
+      <img src="images/pidgey.png" class="tile">
+      <img src="images/pikachu.png" class="tile">
+      <img src="images/polywog.png" class="tile">
+      <img src="images/ponita.png" class="tile">
+      <img src="images/psyduck.png" class="tile">
+      <img src="images/rattata.png" class="tile">
+      <img src="images/sandshrew.png" class="tile">
+      <img src="images/seel.png" class="tile">
+      <img src="images/squirtle.png" class="tile">
+      <img src="images/tauros.png" class="tile">
+      <img src="images/venonat.png" class="tile">
+      <img src="images/vulpix.png" class="tile">
+    </div>
+
+    <script src="09_Example-PokemonLineupSolved.js"></script>
+  </body>
+</html>

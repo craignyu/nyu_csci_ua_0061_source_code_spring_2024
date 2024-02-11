@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Intro to the DOM</h1>
+
+    <div id="container">
+      <div id="a">A</div>
+      <div id="b">B</div>
+      <div id="c">C</div>
+    </div>
+
+    <script>
+      // DOM references
+      const container = document.querySelector('#container');
+      const a = document.querySelector('#a');
+      const b = document.querySelector('#b');
+      const c = document.querySelector('#c');
+
+      // method #1: ask an element to remove itself from its parent
+      a.remove();
+
+      // method #2: ask the container to remove one of its children
+      // to do this we have to provide a reference to the child
+      container.removeChild(b);
+
+      // note: the element MUST be a child of the parent in order
+      // for this to succeed -- the following line will generate a runtime error
+      //container.removeChild(a); // a is no longer a child of the container
+
+    </script>
+
+  </body>
+</html>

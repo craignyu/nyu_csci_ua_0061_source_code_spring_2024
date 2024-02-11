@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Capturing Event Objects</h1>
+
+    <div>
+      <button id="button2">Click Me</button>
+      <button id="button3">Click Me</button>
+      <button id="button4">Click Me</button>
+    </div>
+
+    <div id="lotsofbuttons1">
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+    </div>
+
+    <div id="lotsofbuttons2">
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+      <button>Click Me</button>
+    </div>
+
+    <script>
+
+      // one huge advantage to using 'event' objects is the ability
+      // to write a single function that can be used by multiple
+      // elements.  here's a stripped down example:
+
+      // first, set up a function that's not attached to any event
+      // listener for any element on the page
+      function makeYellow(event) {
+        // here we reference the 'currentTarget' property of the
+        // event object to link back to the element that caused
+        // the event to 'fire'
+        event.currentTarget.style['background-color'] = 'yellow';
+      }
+
+      // next, set each element to listen for events and trigger
+      // this function -- because the function references the
+      // event.currentTarget variable it's not necessary to write
+      // a separate function for each button since the event object
+      // is helping us to identify which one cauesd the function
+      // to invoke
+      document.getElementById('button2').onclick = makeYellow;
+      document.getElementById('button3').onclick = makeYellow;
+      document.getElementById('button4').onclick = makeYellow;
+
+      // we can also do this by using a multiple element DOM Query
+      const lotsOfButtons1 = document.querySelectorAll('#lotsofbuttons1 button');
+      for (let i = 0; i < lotsOfButtons1.length; i++) {
+        lotsOfButtons1[i].onclick = makeYellow;
+      }
+
+      // there's also no need to set up a single function ahead
+      // of time for this.  we can easily do this using an anonymous
+      // function that we create inside of a loop.  for example:
+      const lotsOfButtons2 = document.querySelectorAll('#lotsofbuttons2 button');
+      for (let i = 0; i < lotsOfButtons2.length; i++) {
+        lotsOfButtons2[i].onclick = function(event) {
+          event.currentTarget.style.backgroundColor = 'blue';
+        }
+      }
+
+    </script>
+  </body>
+</html>

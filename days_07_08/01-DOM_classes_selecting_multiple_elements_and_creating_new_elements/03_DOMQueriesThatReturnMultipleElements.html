@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      div {
+        width: 100px;
+        height: 100px;
+      }
+      .yellowBackground {
+        background-color: yellow;
+        color: black;
+      }
+      .blueBackground {
+        background-color: skyblue;
+        color: white;
+      }
+      .redBackground {
+        background-color: red;
+        color: white;
+      }
+      .thickBorder {
+        border: 10px solid black;
+      }
+      .thinBorder {
+        border: 1px solid black;
+      }
+      .noBorder {
+        border: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Intro to the DOM</h1>
+    <div id="one" class="yellowBackground">Div One</div>
+    <div id="two" class="yellowBackground thinBorder">Div Two</div>
+    <div id="three" class="blueBackground">Div Three</div>
+    <div id="four" class="blueBackground thickBorder">Div Four</div>
+    <div id="five" class="redBackground thinBorder">Div Five</div>
+
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2
+        <ul>
+          <li>Sub item 1</li>
+          <li>Sub item 2</li>
+        </ul>
+      </li>
+      <li>Item 3</li>
+    </ul>
+
+    <script src="03_DOMQueriesThatReturnMultipleElements.js"></script>
+  </body>
+</html>

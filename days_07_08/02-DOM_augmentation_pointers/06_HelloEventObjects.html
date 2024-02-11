@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style>
+      #foo {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        background-color: #eee;
+        margin: auto;
+        position: relative;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Hello Event Objects</h1>
+
+    <div id="foo"></div>
+
+    <script>
+      // grab a reference to the 'foo' div
+      const foo = document.querySelector('#foo');
+
+      // set up an event listener that will trigger every time the
+      // user clicks on the '#foo' div - we are going to design the
+      // function that responds to this request to accept a single
+      // argument named 'event'
+      document.querySelector('#foo').onclick = function(event) {
+
+        // the 'event' object contains a host of information about the
+        // conditions that were detected that caused the event to fire
+        console.dir( event );
+
+        // some interesting / useful properties of this object ...
+
+        // offsetX & offsetY - the 2D coordinates that indicate where
+        // inside of the element the click was detected
+        foo.innerHTML += `Click at: ${event.offsetX} ${event.offsetY}<br>`;
+
+        // timeStamp - how many milliseconds after the page has loaded
+        // did the event occur?
+        foo.innerHTML += `Click occured ${parseInt(event.timeStamp)} milliseconds after page load<br>`;
+
+        // currentTarget - a reference back to the element that caused
+        // the event to fire.  not incredibly useful in this example but
+        // we will use this to much greater effect in the next example
+        console.log(event.currentTarget);
+
+      }
+
+    </script>
+  </body>
+</html>

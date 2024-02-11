@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>(click here to mess this page up)</h1>
+
+    <script>
+      // remember that JavaScript runs where it can be found on the page
+      // by writing text to the document here we are injecting content directly
+      // into the DOM at this exact spot
+      document.write("<p>This is from a script!");
+    </script>
+
+    <h3>This is after the p tag</h3>
+
+    <script>
+      // it's safe to keep using document.write in this way as all we are doing
+      // is adding content to the DOM as the page is loading itself
+      document.write("<p>Yet another p tag!");
+
+      // however, it is NOT safe to use document.write after the DOM has fully loaded
+      // for example, consider this code - it will only run when the user clicks on
+      // the h1 tag above. the browser will OVERWRITE the entire document with your new text!
+      let el = document.querySelector('h1');
+      el.onclick = function() {
+        document.write("<p>You clicked on the h1</p>");
+      }
+    </script>
+
+
+  </body>
+</html>

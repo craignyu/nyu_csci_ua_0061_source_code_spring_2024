@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style>
+      #outer_container {
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        background-color: #eee;
+        float: left;
+        margin-right: 20px;
+      }
+
+      #inner_container {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        background-color: #ccc;
+      }
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+
+      #instructions {
+        float: left;
+        width: 500px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h1>JavaScript Event Mechanics: 'currentTarget' vs. 'target'</h1>
+
+    <div id="outer_container">
+      <div id="inner_container">
+        <img src="images/pikachu.png">
+      </div>
+    </div>
+
+    <div id="instructions">
+
+      <p>For this example you should check the console.  The 'event' object contains two simliar properties - 'event.currentTarget' and 'event.target'.  Both properties are available whenever the user interacts with an element.</p>
+
+      <p>The one that we have been using - 'event.currentTarget' - always refers back to the element that has an event listener attached to it.  This is generally what you would expect, and because of this we tend to use this property exclusively.</p>
+
+      <p>'event.target' refers to the element that initially triggered the event (the 'deepest' element in the chain).  View the console to see how this works in the example to the left.</p>
+
+      <p>Note that you could also use the JavaScript 'this' keyword in place of the 'event.currentTarget' property, as these two values will report the same element under most circumstances. The organization of the code is as follows:</p>
+
+      <pre>&lt;div id="outer_container"&gt;
+  &lt;div id="inner_container"&gt;
+    &lt;img src="images/pikachu.png"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+    </div>
+
+
+    <script>
+
+      // DOM references to all of the elements on the page
+      const outer_container = document.querySelector('#outer_container');
+      const inner_container = document.querySelector('#inner_container');
+      const image = document.querySelector('img');
+      const results = document.querySelector('#results');
+
+      // set up each element to listen for clicks (except for results)
+      outer_container.onclick = function(event) {
+        console.log('Outer Container was clicked');
+        console.log('event.currentTarget is', event.currentTarget);
+        console.log('event.target is', event.target);
+        console.log('this is', this);
+        console.log();
+      }
+
+      inner_container.onclick = function(event) {
+        console.log('Inner Container was clicked');
+        console.log('event.currentTarget is', event.currentTarget);
+        console.log('event.target is', event.target);
+        console.log('this is', this);
+        console.log();
+      }
+
+      image.onclick = function(event) {
+        console.log('Image was clicked');
+        console.log('event.currentTarget is', event.currentTarget);
+        console.log('event.target is', event.target);
+        console.log('this is', this);
+        console.log();
+      }
+
+
+    </script>
+  </body>
+</html>

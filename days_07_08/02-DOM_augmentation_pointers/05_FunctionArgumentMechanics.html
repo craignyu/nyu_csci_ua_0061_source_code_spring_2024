@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Function Argument Mechanics</h1>
+
+    <script>
+
+      // a function in JavaScript can be designed to accept 0 or more arguments
+      function fun1(a) {
+        console.log(a);
+      }
+      fun1(5);  // 5
+
+      // however, there is no explicit rule that prevents you from sending
+      // more or less arguments to a JavaScript function.  For example:
+      fun1(); // undefined, but the program doesn't crash
+
+      // likewise, you can create a function that is designed to accept no arguments
+      function fun2() {
+        console.log("fun 2 was called");
+      }
+
+      // and you can send this function an argument without the program crashing
+      fun2(5);  // fun 2 was called
+
+    </script>
+  </body>
+</html>
