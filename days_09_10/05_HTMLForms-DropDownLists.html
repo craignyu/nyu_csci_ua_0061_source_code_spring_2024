@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      .output {
+        min-height: 1.0em;
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>HTML Forms</h1>
+    <!-- the 'form' tag is used to group form elements together
+         technically it is only required when you are planning on sending data to a server
+         but we will use it here to get in the habit for the 2nd half of the class! -->
+    <form>
+
+      <!-- the select tag is used to render a drop-down list
+           the user can only select a single element from this list
+           from a series of pre-determined options.
+      -->
+      <div>
+        <select id="select1" name="select1">
+          <option value="a">First option (a)</option>
+          <option value="b">First option (b)</option>
+          <option value="c">First option (c)</option>
+        </select>
+      </div>
+
+      <div>
+        <!-- drop down list with a pre-selected value (default is 1st value) -->
+        <select id="select2" name="select2">
+          <option value="pear">Pears</option>
+          <option value="peach" selected>Peaches</option>
+          <option value="melon">Melons</option>
+        </select>
+      </div>
+
+      <div>
+        Get the value of both dropdowns and print them in the box below:
+        <button id="dropdownbutton">Click to get value of menus</button>
+        <div class="output"></div>
+      </div>
+
+    </form>
+
+    <script type="text/javascript">
+      // textbox values
+      document.getElementById('dropdownbutton').onclick = function(event) {
+        // stop the form from submitting itself! the form wants to send
+        // its data to another program, but we don't need that functionality
+        // yet (we will do this after break though!)
+        event.preventDefault();
+
+        // get the value of both textareas using the 'value' property
+        // on the DOM element associated with the textboxes
+        let val1 = document.getElementById('select1').value;
+        let val2 = document.getElementById('select2').value;
+
+        // update the output div
+        event.currentTarget.nextElementSibling.innerHTML = '';
+        event.currentTarget.nextElementSibling.innerHTML += val1;
+        event.currentTarget.nextElementSibling.innerHTML += '<br>';
+        event.currentTarget.nextElementSibling.innerHTML += val2;
+        event.currentTarget.nextElementSibling.innerHTML += '<br>';
+      }
+    </script>
+  </body>
+</html>

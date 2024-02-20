@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style>
+      #container {
+        width: 200px;
+        height: 100px;
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Intro to the DOM</h1>
+
+    <a id="link1" href="https://www.nyu.edu">Link 1</a>
+
+    <div id="container">
+      <a id="link2" href="https://www.nyu.edu">Link 2</a>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+      // DOM references
+      let results = document.getElementById('results');
+      let link1 = document.getElementById('link1');
+      let link2 = document.getElementById('link2');
+      let container = document.getElementById('container');
+
+      // link #1 event listener
+      link1.onclick = function(event) {
+
+        // prevent the browser from performing its default behavior
+        // (opening the URL in the href property)
+        event.preventDefault();
+
+        results.innerHTML += "Link 1 was clicked<br>";
+      }
+
+      // link #2 event listener
+      link2.onclick = function(event) {
+
+        // prevent the browser from performing its default behavior
+        // (opening the URL in the href property)
+        event.preventDefault();
+
+        // prevent additional event listeners from triggering up
+        // from this element to its parent element
+        event.stopPropagation();
+
+        results.innerHTML += "Link 2 was clicked<br>";
+      }
+
+      // container event listener
+      container.onclick = function(event) {
+        results.innerHTML += "Container was clicked<br>";
+      }
+
+
+    </script>
+  </body>
+</html>

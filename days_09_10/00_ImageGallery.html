@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Image Gallery</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      #container {
+        text-align: center;
+      }
+      #results {
+        padding: 25px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Image Gallery</h1>
+
+    <div id="container">
+      <img src="images/hawaii_small.jpg" data-bigimage="images/hawaii.jpg" data-info="A relaxing afternoon sipping coconut milk on the beach in Hawaii">
+      <img src="images/pyramid_small.jpg" data-bigimage="images/pyramid.jpg" data-info="Coming at you live from the Great Pyramids of Giza!">
+      <img src="images/mallorca_small.jpg" data-bigimage="images/mallorca.jpg" data-info="Morning over the Mediterranean">
+    </div>
+
+    <div id="results">
+      <div id="caption"></div>
+      <div id="counter"></div>
+      <div id="bigimage"></div>
+    </div>
+
+    <script src="00_ImageGallerySolved.js"></script>
+  </body>
+</html>

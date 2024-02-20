@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      .output {
+        min-height: 1.0em;
+        background-color: #eee;
+      }
+      #textarea2 {
+        width: 500px;
+        height: 100px;
+        font-family: fantasy;
+        resize: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>HTML Forms</h1>
+    <!-- the 'form' tag is used to group form elements together
+         technically it is only required when you are planning on sending data to a server
+         but we will use it here to get in the habit for the 2nd half of the class! -->
+    <form>
+
+      <!-- the textarea tag is used to render a multi-line textbox
+           it can be fully styled via CSS -->
+      <div>
+        <textarea id="textarea1" name="textarea1">Default text</textarea>
+      </div>
+      <div>
+        <textarea id="textarea2" name="textarea2">A fancy textarea</textarea>
+      </div>
+      <div>
+        Get the value of both textareas and print them in the box below:
+        <button id="textareabutton">Click to get value of boxes</button>
+        <div class="output"></div>
+      </div>
+
+    </form>
+
+    <script type="text/javascript">
+      // textbox values
+      document.getElementById('textareabutton').onclick = function(event) {
+        // stop the form from submitting itself! the form wants to send
+        // its data to another program, but we don't need that functionality
+        // yet (we will do this after break though!)
+        event.preventDefault();
+
+        // get the value of both textareas using the 'value' property
+        // on the DOM element associated with the textboxes
+        let val1 = document.getElementById('textarea1').value;
+        let val2 = document.getElementById('textarea2').value;
+
+        // update the output div
+        event.currentTarget.nextElementSibling.innerHTML = '';
+        event.currentTarget.nextElementSibling.innerHTML += val1;
+        event.currentTarget.nextElementSibling.innerHTML += '<br>';
+        event.currentTarget.nextElementSibling.innerHTML += val2;
+        event.currentTarget.nextElementSibling.innerHTML += '<br>';
+      }
+    </script>
+  </body>
+</html>

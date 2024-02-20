@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Working with the DOM</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      .output {
+        min-height: 1.0em;
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>HTML Forms</h1>
+    <!-- the 'form' tag is used to group form elements together
+         technically it is only required when you are planning on sending data to a server
+         but we will use it here to get in the habit for the 2nd half of the class! -->
+    <form>
+
+      <!-- the input tag can be used to render checkboxes as well.
+           checkboxes can either be checked or unchecked
+      -->
+      <div>
+        <p>What do you want on your pizza? Check all that apply:</p>
+        <input type="checkbox" id="cheese" name="cheese" value="cheese">Cheese<br>
+        <input type="checkbox" id="mushrooms" name="mushrooms" value="mushrooms">Mushrooms<br>
+        <input type="checkbox" id="pineapple" name="pineapple" value="pineapple">Pineapple<br>
+      </div>
+
+      <div>
+
+      </div>
+
+      <div>
+        Get the value of the check boxes and print them into the box below:
+        <button id="button">Click to get value of checkboxes</button>
+        <div class="output"></div>
+      </div>
+
+    </form>
+
+    <script type="text/javascript">
+      // when the button is pressed
+      document.getElementById('button').onclick = function(event) {
+        // stop the page from refreshing
+        event.preventDefault();
+
+        // directly access each element
+        let cheeseElement = document.getElementById('cheese');
+        let mushroomElement = document.getElementById('mushrooms');
+        let pineappleElement = document.getElementById('pineapple');
+
+        // if the element is checked we should do something
+        document.querySelector('.output').innerHTML = '';
+        if (cheeseElement.checked === true) {
+          document.querySelector('.output').innerHTML += 'Cheese!';
+        }
+        if (mushroomElement.checked === true) {
+          document.querySelector('.output').innerHTML += 'Mushroom!';
+        }
+        if (pineappleElement.checked === true) {
+          document.querySelector('.output').innerHTML += 'Pineapple!';
+        }
+
+      }
+
+
+    </script>
+  </body>
+</html>

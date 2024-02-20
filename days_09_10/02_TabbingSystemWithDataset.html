@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Tabbing System with Dataset</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+      #tabs {
+        border-bottom: 1px solid black;
+      }
+      .tab {
+        font-size: 125%;
+        text-decoration: none;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin: 0px;
+        color: #000;
+        box-sizing: border-box;
+      }
+
+      .active {
+        border: 1px solid black;
+        background-color: #fc0;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Tabbing System with Dataset</h1>
+
+    <!-- our tabs -->
+    <div id="tabs">
+      <a href="#" class="tab active" data-mycontentpanel="#about">ABOUT</a>
+      <a href="#" class="tab" data-mycontentpanel="#prices">PRICES</a>
+      <a href="#" class="tab" data-mycontentpanel="#contact">CONTACT</a>
+    </div>
+
+    <div id="content">
+      <div id="about">
+        <p>All about us!</p>
+        <img src="images/hawaii.jpg">
+      </div>
+      <div id="prices" class="hidden">
+        <p>Our prices</p>
+        <img src="images/pyramid.jpg">
+      </div>
+      <div id="contact" class="hidden">
+        <p>Contact us here</p>
+        <img src="images/mallorca.jpg">
+      </div>
+    </div>
+
+    <script type="text/javascript" src="02_TabbingSystemWithDatasetSolved.js"></script>
+  </body>
+</html>
