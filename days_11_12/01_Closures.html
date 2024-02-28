@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Closures</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Closures</h1>
+    <script type="text/javascript">
+
+        // JavaScript is a "garbage collected" language.
+        // this means that values stored in memory are regularlly visited to 
+        // determine if they are no longer needed. if so, they are removed.
+        let testVariable = "hello, world";
+        testVariable = undefined; // the string "hello, world" is no longer being pointed to, and will be removed from the heap at some point in the future
+
+
+        // in JavaScript, this means that as long as a value has an active pointer it will be retained
+        
+        // now consider the following code:
+        function testFunction1() {
+            let i = 0;
+            console.log(i)
+        }
+
+        // if we call this function we will create the variable i, which is scoped to the most recently opened block (the function)
+        // once the function completes there is no way to access this variable anymore (the function has ended)
+        // so JavaScript will remove it
+
+
+        // however, consider this situation:
+        function testFunction2() {
+            let i = 0;
+            document.querySelector('h1').onclick = function() {
+                console.log(i);
+            }
+        }
+
+        // in this case we have set up an event listener inside of the function. this event listener is referencing the
+        // local variable 'i', which is scoped to the testFunction2 block. because there is still a way for the program
+        // to access the variable it is retained. this is what we refer to as a "closure" 
+
+        // definition:
+        // A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function's scope from an inner function. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+        
+
+
+        // as you can see from the example above, functions in JavaScript can be 'nested' -- for example, the 'inside' function is nested inside of the 'fun2' function
+        // it is a 'local' function to fun2 - the only way to call it invoke it from inside of the 'fun2' function
+        function fun2() {
+
+            function inside() {
+                console.log("inside was called!");
+            }
+
+            inside();
+        }
+
+        fun2();
+
+
+        // nested functions have access to their own variable scope as well as their parent's variable scope.  For example:
+        function fun3() {
+            let counter = 0;
+            function countUp() {
+                console.log("Counter started at: ", counter);
+                counter += 1; // update the 'counter' variable that is local to our parent's variable scope
+                console.log("Counter is now: ", counter);
+            }
+
+            countUp();
+        }
+
+
+
+        // when a function executes JavaScript carves out a little piece of memory to hold the function and all of its variables -
+        // but if a function has another function inside of it things can get a little strange.  as long as there is a reference
+        // to this region of memory JavaScript will not remove the local variables associated with the function.
+        // this region of persistant memory is called a 'closure'
+        function fun4() {
+            let counter = 0;
+            function countUp() {
+                counter += 1;
+                console.log("Counter is now: ", counter);
+            }
+
+            // return a REFERENCE to the local function 'countUp'
+            return countUp;
+        }
+
+        // 'a' is a link to the countUp function inside of fun3
+        let a = fun4();
+
+        // calling 'a' will invoke the countUp function, which manipulates the local variable 'a' inside of fun3
+        a();
+        // note how the counter variable keeps going up!  this is because the closure is holding onto every local value inside
+        // of the function and will not allow it to go away since there is a link to the closure here in the main program
+        a();
+        a();
+        a();
+
+        console.log("-----");
+
+        // if we invoke the function a second time a new closure is formed.  this closure is independent of the one created above,
+        // so the local variable can change and have a different value from the previous closure.
+        let b = fun4();
+        b();
+        b();
+
+        console.log("-----");
+
+        // note how 'a' was unaffected by what we did to 'b'
+        a();
+        b();
+
+
+
+        // so why does all of this matter?
+        // well, we know that we can tamper with global variables using the JavaScript console
+        // we also know that we cannot tamper with local variables inside of a function using the JavaScript console
+        // if we were to wrap all of our code inside of a function all aspects of our program would become local variables
+        // because there are linkages to our program once the function stops running (i.e. event listeners or other functions)
+        // a 'closure' is established which retains all local values for us to continue to work with
+
+
+
+
+
+    </script>
+  </body>
+</html>

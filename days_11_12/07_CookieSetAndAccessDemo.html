@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Cookies</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Cookies</h1>
+    <form>
+      <select id="color">
+        <option value="select">Select a color</option>
+        <option value="yellow">Yellow</option>
+        <option value="pink">Pink</option>
+        <option value="orange">Orange</option>
+      </select>
+    </form>
+    <script type="text/javascript">
+
+      // before we begin, get access to all currently set cookies for this domain
+
+      // step 1: split up the cookie string based on the '; ' character sequence - this will yield an array of NAME/VALUE pairs
+      let splitCookies = document.cookie.split("; ");
+
+      // step 2: set up an object to hold our NAME/VALUE pairs
+      let allCookies = {};
+
+      // step 3: visit each split cookie
+      for (let i = 0; i < splitCookies.length; i++) {
+        // split the individual cookie up based on the '=' character
+        let nameValuePair = splitCookies[i].split('=');
+
+        // assign to our object
+        allCookies[ nameValuePair[0] ] = nameValuePair[1];
+      }
+
+      // do we already have a 'color' cookie?  if so, set the background color using this cookie's value
+      if (allCookies['color'] !== undefined) {
+        document.querySelector('body').style['background-color'] = allCookies['color'];
+      }
+
+      // set up an event listener on our 'color' drop down so that the user can change the background color of the page
+      document.getElementById('color').addEventListener('change', function(event) {
+
+        // grab the value
+        let newColor = event.currentTarget.value;
+
+        if (newColor !== 'select') {
+          // set the background color of the page
+          document.querySelector('body').style['background-color'] = newColor;
+
+          // set a cookie with this value so the next time we visit the page the background will be set up correctly
+          document.cookie = 'color='+newColor;
+        }
+
+
+      });
+
+
+
+    </script>
+  </body>
+</html>

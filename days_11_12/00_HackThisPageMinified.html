@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Hack this page</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Hack this page (minified)</h1>
+    <div id="bank">
+      <span id="caption">Your bank amount:</span>
+      <span id="amount"></span>
+    </div>
+    <button id="remove">Withdraw $</button>
+
+    <script type="text/javascript">
+
+        // minified using: https://www.minifier.org/
+        let bankAmount=50;document.getElementById("amount").innerHTML=bankAmount,document.getElementById("remove").addEventListener("click",function(n){bankAmount>=10&&(bankAmount-=10,document.getElementById("amount").innerHTML=bankAmount)});
+    </script>
+  </body>
+</html>

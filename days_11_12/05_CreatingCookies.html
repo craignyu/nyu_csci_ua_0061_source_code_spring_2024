@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Cookies</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Cookies</h1>
+    <script type="text/javascript">
+
+      // prompt the user for their name
+      let name = prompt("What is your name?");
+
+      // store this value as a cookie
+      document.cookie = 'name=' + name;
+
+      // output the cookie string to the console (DEBUG)
+      console.log( document.cookie );
+
+    </script>
+  </body>
+</html>

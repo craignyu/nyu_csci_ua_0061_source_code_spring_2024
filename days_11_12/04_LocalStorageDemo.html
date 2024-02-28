@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>localStorage</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>localStorage</h1>
+
+    <div>
+      <h3>Your Cart</h3>
+      <div id="cart"></div>
+    </div>
+
+    <hr>
+
+    <div>
+      Eggs
+      <select id="eggs">
+        <option value="select">Select a quantity</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <button data-name="Eggs" class="add_to_cart">Add to cart</button>
+    </div>
+
+    <div>
+      Bread
+      <select id="bread">
+        <option value="select">Select a quantity</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <button data-name="Bread" class="add_to_cart">Add to cart</button>
+    </div>
+
+    <div>
+      Cheese
+      <select id="cheese">
+        <option value="select">Select a quantity</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <button data-name="Cheese" class="add_to_cart">Add to cart</button>
+    </div>
+
+    <script type="text/javascript">
+      // when the page loads we should refresh our cart
+      refreshCart();
+
+      let allButtons = document.querySelectorAll('.add_to_cart');
+      for (let i = 0; i < allButtons.length; i++) {
+        allButtons[i].addEventListener('click', function(event) {
+          if (event.currentTarget.previousElementSibling.value !== 'select') {
+            // get name of this product
+            let name = event.currentTarget.dataset.name;
+
+            // get quantity
+            let quant = event.currentTarget.previousElementSibling.value;
+
+            // get current amount from localStorage
+            let currentAmount = window.localStorage.getItem(name);
+
+            // add to localStorage
+            if (currentAmount === null) {
+              window.localStorage.setItem(name, quant);
+            }
+            else {
+              window.localStorage.setItem(name, parseInt(quant) + parseInt(currentAmount));
+            }
+
+            // refresh the Cart
+            refreshCart();
+          }
+        });
+      }
+
+      function refreshCart() {
+        // wipe out the #cart div and re-write inspect
+        document.getElementById('cart').innerHTML = '';
+
+        // visit all items in localStorage and put them into the #cart div
+        let productsToLookFor = ['Eggs', 'Bread', 'Cheese'];
+        for (let i = 0; i < productsToLookFor.length; i++) {
+          if (window.localStorage.getItem(productsToLookFor[i]) !== null) {
+            document.getElementById('cart').innerHTML += productsToLookFor[i] + ' : ' + window.localStorage.getItem(productsToLookFor[i]) + '<br>';
+          }
+        }
+
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Cookies</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Cookies</h1>
+    <script type="text/javascript">
+
+      // to view a cookie we need to inspect the document's 'cookie' property to find the desired NAME/VALUE pair
+      // remember that the cookie property is just a string, so we need to use string manipulation techniques to
+      // access the values we care about
+
+      // here's a quick way to do this
+
+      // step 1: split up the cookie string based on the '; ' character sequence - this will yield an array of NAME/VALUE pairs
+      let splitCookies = document.cookie.split("; ");
+
+      // step 2: set up an object to hold our NAME/VALUE pairs
+      let allCookies = {};
+
+      // step 3: visit each split cookie
+      for (let i = 0; i < splitCookies.length; i++) {
+        // split the individual cookie up based on the '=' character
+        let nameValuePair = splitCookies[i].split('=');
+
+        // assign to our object
+        allCookies[ nameValuePair[0] ] = nameValuePair[1];
+      }
+
+      // now look at our allCookies object
+      console.log(allCookies);
+
+    </script>
+  </body>
+</html>

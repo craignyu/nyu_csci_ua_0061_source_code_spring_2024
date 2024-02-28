@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Empty Example</title>
+    <meta charset="utf-8">
+    <style>
+      #result {
+        background-color: #eee;
+        height: 300px;
+        overflow: scroll;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>JavaScript Timing Demo</h1>
+
+    <button id="one">setTimeout w/ no args</button>
+    <button id="two">setTimeout w/ args</button>
+    <button id="three">setInterval w/ no args</button>
+    <button id="four">setInterval w/ args</button>
+    <button id="five">clear all intervals</button>
+
+    <div id="result"></div>
+
+    <script type="text/javascript">
+
+      // DOM queries
+      let result = document.querySelector('#result');
+
+      // keep track of interval IDs
+      let globalIntervals = [];
+
+      document.querySelector('#one').addEventListener('click', function(e) {
+        // call function1 in 1 second with no arguments
+        setTimeout( function1, 1000 );
+      });
+
+      document.querySelector('#two').addEventListener('click', function(e) {
+        // call function1 in 1 second with three arguments
+        setTimeout( function1, 1000, "apple", "pear", "peach" );
+      });
+
+      document.querySelector('#three').addEventListener('click', function(e) {
+        // call function1 every 1 second with no arguments
+        let id = setInterval( function1, 1000 );
+        globalIntervals.push( id );
+        result.innerHTML = `${getTime()} Setting interval ID: ${id}<br>` + result.innerHTML;
+      });
+
+      document.querySelector('#four').addEventListener('click', function(e) {
+        // call function1 every 1 second with three arguments
+        let id = setInterval( function1, 1000, "dog", "cat", "horse" );
+        globalIntervals.push( id );
+        result.innerHTML = `${getTime()} Setting interval ID: ${id}<br>` + result.innerHTML;
+      });
+
+      document.querySelector('#five').addEventListener('click', function(e) {
+        // clear any existing intervals
+        while (globalIntervals.length > 0) {
+          clearInterval( globalIntervals[0] );
+          result.innerHTML = `${getTime()} Clearing interval ID: ${globalIntervals[0]}<br>` + result.innerHTML;
+          globalIntervals.splice(0, 1);
+        }
+      });
+
+      function function1(a1, a2, a3) {
+        result.innerHTML = `${getTime()} function1 was called with ${a1} ${a2} ${a3}<br>` + result.innerHTML
+      }
+
+      function getTime() {
+        let now = new Date();
+        return `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>localStorage</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>localStorage</h1>
+    <script type="text/javascript">
+
+      // localStorage is a child object of the 'window' object
+      console.log( window.localStorage );
+
+      // you can add new items to the localStorage object for your domain by
+      // using the 'setItem' method.  This sets a 'name / value' pair that will be
+      // accessible to all pages on your domain.
+      window.localStorage.setItem('name', 'pikachu');
+
+      // you can get items from localStorage by using 'getItem'
+      console.log( window.localStorage.getItem('name') );
+
+      // if you attempt to get an item from localStorage that does not exist
+      // you will be given a 'null' value (not an error)
+      console.log( window.localStorage.getItem('foobar') );
+
+      // you can remove an item from localStorage using the 'removeItem' method
+      window.localStorage.removeItem('name');
+
+      // you can also clear localStorage by calling the 'clear' method on it - this will
+      // erase all locally stored data
+      window.localStorage.clear();
+
+    </script>
+  </body>
+</html>

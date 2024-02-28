@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Closures</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Closures</h1>
+    <div id="bank">
+      <span id="caption">Your bank amount:</span>
+      <span id="amount"></span>
+    </div>
+    <button id="remove">Withdraw $</button>
+
+    <script type="text/javascript">
+
+
+      // so why does all of this matter?
+      // well, we know that we can tamper with global variables using the JavaScript console
+      // we also know that we cannot tamper with local variables inside of a function using the JavaScript console
+      // if we were to wrap all of our code inside of a function all aspects of our program would become local variables
+      // because there are linkages to our program once the function stops running (i.e. event listeners or other functions)
+      // a 'closure' is established which retains all local values for us to continue to work with
+
+      // design a function to hold all of our application code - we are going to invoke this function immediately and set up a closure
+      (function() {
+
+        // define our starting bank amount
+        let bankAmount = 50;
+
+        // grab a ref to the amount 'span' tag and update it
+        document.getElementById('amount').innerHTML = bankAmount;
+
+        // set up event listeners on the buttons
+
+        // withdraw $
+        document.getElementById('remove').addEventListener('click', function(event) {
+
+          // only remove if we have at least $10
+          if (bankAmount >= 10) {
+            // we can update the 'amount' variable because it is in our parent's scope
+            bankAmount -= 10;
+
+            // update the 'span' tag to reflect this
+            document.getElementById('amount').innerHTML = bankAmount;
+          }
+
+        });
+
+      })();
+
+    </script>
+  </body>
+</html>
