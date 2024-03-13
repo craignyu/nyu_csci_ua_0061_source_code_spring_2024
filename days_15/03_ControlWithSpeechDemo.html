@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Speech to Text</title>
+
+    <style>
+      #panel_start {
+        background-color: #eee;
+        width: 500px;
+        margin: auto;
+        min-height: 200px;
+        text-align: center;
+        font-size: 200%;
+      }
+      #panel_application {
+      }
+      .hidden {
+        display: none;
+      }
+
+      .box {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+        float: left;
+      }
+
+      .label {
+        font-size: 120%;
+        font-weight: bold;
+      }
+      .output {
+        min-height: 1em;
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="panel_start">
+      Click here to start!
+    </div>
+
+    <div id="panel_application" class="hidden">
+      <h1>Create Boxes with your Voice!</h1>
+      <p>Say a color - red, green, blue, yellow, orange or pink - to create a box.</p>
+      <p>Say the word 'count' to have the system tell you how many boxes are on the page.</p>
+
+      <p class="label">Final Results:</p>
+      <div class="output" id="final"></div>
+
+      <p class="label">Interim Results:</p>
+      <div class="output" id="interim"></div>
+
+      <div id="box_container"></div>
+    </div>
+
+
+
+    <script>
+
+        // make sure our browser supports the speech recognition API
+        if ("speechSynthesis" in window && "webkitSpeechRecognition" in window) {
+
+          // DOM queries
+          let panel_start = document.getElementById('panel_start');
+          let panel_application = document.getElementById('panel_application');
+          let box_container = document.getElementById('box_container');
+
+          // create a speech recongnition instance
+          let speechRecognition = new webkitSpeechRecognition();
+
+          // this is the string that we will use to store our final transcript
+          let final_transcript = "";
+
+          // always listen and deliver results as they are decoded
+          speechRecognition.continuous = true;
+          speechRecognition.interimResults = true;
+
+          // flag to keep track of when we have successfully gotten permission from the user to play sounds
+          let hasEnabledVoice = false;
+
+          // our main voice object - we only need one of these!
+          let voice;
+
+          // how many of each type of box have we created so far?
+          let colors = {
+          }
+
+          // commands that we want to run based on words that are detected
+          let commands = {
+            'red': function() {
+              createBox('red');
+            },
+            'green': function() {
+              createBox('green');
+            },
+            'blue': function() {
+              createBox('blue');
+            },
+            'yellow': function() {
+              createBox('yellow');
+            },
+            'orange': function() {
+              createBox('orange');
+            },
+            'pink': function() {
+              createBox('pink');
+            },
+            'count': function() {
+              voice.text = 'There are ';
+              for (let color in colors) {
+                voice.text += `${colors[color]} ${color} boxes, `;
+              }
+              speechSynthesis.speak(voice);
+            }
+          }
+
+          function createBox(color) {
+            if (colors[color]) {
+              colors[color]++;
+            }
+            else {
+              colors[color] = 1;
+            }
+
+            let temp = document.createElement('div');
+            temp.classList.add('box');
+            temp.style.backgroundColor = color;
+            box_container.appendChild(temp);
+          }
+
+          // start up the application
+          panel_start.onclick = function() {
+            // start speech recognition
+            speechRecognition.start();
+
+            // create a new speech object
+            voice = new SpeechSynthesisUtterance();
+
+            // set volume & text
+            voice.volume = 10;
+            voice.text = 'hello, world';
+
+            // shut down speech recognition when the computer is speaking
+            voice.onstart = function() {
+              speechRecognition.stop();
+            }
+            voice.onend = function() {
+              speechRecognition.start();
+            }
+
+            panel_start.classList.add('hidden');
+            panel_application.classList.remove('hidden');
+          }
+
+
+          // whenever we get results run this function
+          speechRecognition.onresult = function(event) {
+            let interim_transcript = "";
+
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+              if (event.results[i].isFinal) {
+                final_transcript += event.results[i][0].transcript;
+
+                // grab the final word of the transcript
+                let words = final_transcript.split(" ")
+                let finalWord = words[ words.length - 1 ].toLowerCase();
+                console.log(finalWord);
+
+                // see if this is one of our command words
+                if (commands[finalWord]) {
+                  commands[finalWord]();
+                }
+
+              } else {
+                interim_transcript += event.results[i][0].transcript;
+              }
+            }
+            document.querySelector("#final").innerHTML = final_transcript;
+            document.querySelector("#interim").innerHTML = interim_transcript;
+          };
+
+        }
+
+        else {
+          alert("APIs Not Available");
+        }
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Text to Speech</title>
+  </head>
+
+  <body>
+    <h1>Text to Speech Demo</h1>
+    Type some text here: <input type="text" id="sometext" value="Hello, world.">
+    <button id="button_speak">Speak</button>
+
+    <script>
+
+      // Web Speech API -> SpeechSynthesisUtterance
+      // API documentation: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance
+
+        // DOM queries
+        let button_speak = document.querySelector('#button_speak');
+        let sometext = document.querySelector('#sometext');
+
+        // only proceed if our browser supports this API
+        if ("speechSynthesis" in window) {
+
+          // flag to keep track of when we have successfully gotten permission from the user to play sounds
+          let hasEnabledVoice = false;
+
+          // our main voice object - we only need one of these!
+          let voice;
+
+          // when the user clicks the button we can speak some text!
+          // note that this MUST happen in response to user input
+          // (via a mouse click or touch) - if not the browser will
+          // not get the user's consent to play sound
+          button_speak.onclick = function() {
+
+            // make sure speech is enabled (only need to do this once)
+            if (!hasEnabledVoice) {
+              // create a new speech object
+              voice = new SpeechSynthesisUtterance();
+              hasEnabledVoice = true;
+            }
+
+            // set volume & text
+            voice.volume = 10;
+            voice.text = sometext.value;
+
+            // speak!
+            speechSynthesis.speak(voice);
+
+          }
+
+        }
+        else {
+          alert("Speech Synthesis is not enabled in your browser");
+        }
+
+
+    </script>
+  </body>
+</html>

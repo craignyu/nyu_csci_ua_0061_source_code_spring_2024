@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Speech to Text</title>
+
+    <style>
+      .label {
+        font-size: 120%;
+        font-weight: bold;
+      }
+      .output {
+        min-height: 1em;
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Text to Speech Demo</h1>
+
+    <div id="status">Speech Recognition Inactive</div>
+
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+
+    <p class="label">Final Results:</p>
+    <div class="output" id="final"></div>
+
+    <p class="label">Interim Results:</p>
+    <div class="output" id="interim"></div>
+
+    <script>
+
+        // Web Speech API -> SpeechRecognition
+        // API documentation: https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
+
+        // make sure our browser supports the speech recognition API
+        if ("webkitSpeechRecognition" in window) {
+
+          // create a speech recongnition instance
+          let speechRecognition = new webkitSpeechRecognition();
+
+          // this is the string that we will use to store our final transcript
+          let final_transcript = "";
+
+          // always listen and deliver results as they are decoded
+          speechRecognition.continuous = true;
+          speechRecognition.interimResults = true;
+
+          // start and stop recognition
+          document.querySelector("#start").onclick = function() {
+            speechRecognition.start();
+          };
+          document.querySelector("#stop").onclick = function() {
+            speechRecognition.stop();
+          };
+
+          // handle recognition state changes
+          speechRecognition.onstart = function() {
+            document.querySelector("#status").innerHTML = 'Speech Recognition Active';
+          };
+          speechRecognition.onend = function() {
+            document.querySelector("#status").innerHTML = 'Speech Recognition Inactive';
+          };
+          speechRecognition.onerror = function() {
+            document.querySelector("#status").innerHTML = 'Speech Recognition Error Occurred!';
+          };
+
+          // whenever we get results run this function
+          speechRecognition.onresult = function(event) {
+            let interim_transcript = "";
+
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+              if (event.results[i].isFinal) {
+                final_transcript += event.results[i][0].transcript;
+              } else {
+                interim_transcript += event.results[i][0].transcript;
+              }
+            }
+            document.querySelector("#final").innerHTML = final_transcript;
+            document.querySelector("#interim").innerHTML = interim_transcript;
+          };
+
+        }
+
+        else {
+          alert("Speech Recognition Not Available");
+        }
+
+    </script>
+  </body>
+</html>
