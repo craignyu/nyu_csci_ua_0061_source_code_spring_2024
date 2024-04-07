@@ -2,7 +2,6 @@
 <html lang="en-us">
   <head>
     <title>PHP Introduction</title>
-    <meta charset="utf-8">
   </head>
 
   <body>
