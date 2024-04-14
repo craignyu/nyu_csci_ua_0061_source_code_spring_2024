@@ -1,0 +1,1 @@
+Hello, this string is stored within datasource1.txt

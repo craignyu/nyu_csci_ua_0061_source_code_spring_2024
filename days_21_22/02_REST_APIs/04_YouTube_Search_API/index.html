@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Web Development</title>
+
+    <!-- bring in our helpers library, which will make available the 'performFetch' function -->
+    <script src="../helpers.js"></script>
+
+  </head>
+  <body>
+
+    <h1>Hello, YouTube Search</h1>
+
+    <div id="results"></div>
+
+    <!-- documentation for YouTube Search API
+         https://developers.google.com/youtube/v3/getting-started -->
+
+    <script>
+
+        // DOM reference
+        let results = document.getElementById('results');
+        
+        // get your credentials:
+        // 1. visit https://console.developers.google.com
+        // 2. click the drop down carrot at the top of the screen, to the right
+        //    of the "Google Cloud Platform" header graphic
+        // 3. click "New Project"
+        // 4. give your project a name and select your "NYU-GCP-Personal-Projects" location
+        //    from the drop down list in the Location field.  Then click "Create"
+        // 5. a notification will appear at the top right side of the page -
+        //    click on the newly created project title
+        // 6  click on "+ Enable APIs and Services" at the top of the page
+        // 7. search for YouTube
+        // 8. click on the "YouTube Data API v3" link that appears
+        // 9. click the Enable button
+        // 10. click the Credentials link on the left side of the screen
+        // 11. click "+ Create Credentials" and select an API key
+        // 12. copy the string that appears and hit close (you can get this
+        //     later if you ever need it)
+        // 13. paste the API key into the variable below
+
+        // API key (put yours here)
+        let apiKey = 'YOUR_API_KEY_GOES_HERE';
+
+        // initiate a search for a video
+        performFetch({
+          url: 'https://www.googleapis.com/youtube/v3/search',
+          method: 'GET',
+          data: {
+            part: 'snippet',
+            q: 'rick roll',
+            key: apiKey
+          },
+          success: function(data) {
+            // convert data to a JSON object
+            data = JSON.parse(data);
+
+            // if some items came back from the search
+            if (data.items) {
+              // loop over the items and display their thumbnails
+              for (let i =  0; i < data.items.length; i++) {
+                console.log(data.items[i]);
+                console.log("Video ID (to play video):", data.items[i].id.videoId);
+                let img = document.createElement('img');
+                img.src = data.items[i].snippet.thumbnails.default.url;
+                img.width = data.items[i].snippet.thumbnails.default.width;
+                img.height = data.items[i].snippet.thumbnails.default.height;
+                results.appendChild(img);
+              }
+            }
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+
+    </script>
+
+
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Web Development</title>
+
+    <!-- bring in our helpers library, which will make available the 'performFetch' function -->
+    <script src="../helpers.js"></script>
+
+    <style>
+      #result {
+        display: none;
+      }
+
+      #error {
+        display: none;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <h1>Pokemon Search</h1>
+
+    <div id="form">
+      Search for a Pokemon: <input type="text" id="query"><button id="search">Search</button>
+    </div>
+
+    <h3 id="error">This Pokemon doesn't exist</h3>
+
+    <div id="result">
+      <h3 id="pokemon_name"></h3>
+      <img src="#" id="pokemon_image">
+
+      <h4>Type(s)</h4>
+      <ul id="pokemon_types">
+      </ul>
+
+      <h4>Abilities</h4>
+      <ul id="pokemon_abilities">
+      </ul>
+    </div>
+
+    <!-- custom application code -->
+    <script>
+
+        // some DOM references
+        let query = document.getElementById('query');
+        let search = document.getElementById('search');
+        let error = document.getElementById('error');
+        let result = document.getElementById('result');
+        let pokemon_name = document.getElementById('pokemon_name');
+        let pokemon_image = document.getElementById('pokemon_image');
+        let pokemon_types = document.getElementById('pokemon_types');
+        let pokemon_abilities = document.getElementById('pokemon_abilities');
+
+        // listen for searches
+        search.addEventListener('click', function(event) {
+
+
+
+        });
+
+    </script>
+
+  </body>
+</html>

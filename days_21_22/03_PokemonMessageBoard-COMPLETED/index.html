@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Web Development</title>
+
+    <!-- bring in our helpers library, which will make available the 'performFetch' function -->
+    <script src="helpers.js"></script>
+
+    <style>
+      .entry {
+        width: 18%;
+        height: 200px;
+        box-sizing: border-box;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 10px;
+        float: left;
+        word-break: break-all;
+        overflow: hidden;
+        background-color: #eee;
+        margin: 1%;
+      }
+      .entry img {
+        display: block;
+        margin: auto;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>Pokemon Message Board with Fetch</h1>
+
+    <!-- a form the user can fill out to create a new entry for the page -->
+    <div>
+      Avatar:
+      <select id="pokemon">
+        <option value="images/pikachu.png">Pikachu</option>
+        <option value="images/charmander.png">Charmander</option>
+        <option value="images/bulbasaur.png">Bulbasaur</option>
+        <option value="images/squirtle.png">Squirtle</option>
+      </select>
+    </div>
+    <div>
+      Message (keep it clean!):
+      <input type="text" id="message" maxlength="50">
+      <button id="save">Save Message</button>
+    </div>
+
+    <hr>
+
+    <!-- where previous entries will be stored -->
+    <div id="previous"></div>
+
+    <!-- template for a previous entry:
+
+      <div id="item_id" class="entry">
+        <img src="images/pikachu.png">
+        <p>Message goes here</p>
+      </div>
+
+    -->
+
+
+    <!-- custom application code -->
+    <script>
+
+      // dom refs
+      const dropdown = document.getElementById('pokemon');
+      const message = document.getElementById('message');
+      const saveButton = document.getElementById('save');
+      const previous = document.getElementById('previous');
+
+      // get existing entries
+      function getExistingEntries() {
+
+        // step 1: use the fetch API to grab the data.txt file from the server
+        performFetch({
+          method: 'GET',
+          url: 'getentries.php',
+          success: function(data, status) {
+            console.log("Success, got the data from the server");
+
+            // step 2: successfully retrieved file, now we need to parse
+            // it into a JavaScript array
+            let arrayData = JSON.parse(data);
+
+            // step 3: visit each element in the array and create
+            // new DOM elements for each one
+            for (let i = 0; i < arrayData.length; i++) {
+
+              // see if we already have a DOM element with this ID -
+              // if so, we don't want to do anything
+              if (!document.getElementById( arrayData[i]['id'] )) {
+
+                // create an entry div for this item
+                createEntry(arrayData[i]['id'], arrayData[i]['avatar'], arrayData[i]['message']);
+
+              }
+            }
+
+            // in 2 seconds, do this all again to get any new entries that may have been added
+            setTimeout(getExistingEntries, 2000);
+
+          },
+          error: function(req, data, status) {
+            console.log("Error, couldn't get file");
+
+            // in 2 seconds let's try again
+            setTimeout(getExistingEntries, 2000);
+          }
+        })
+
+      }
+
+      // call our function 1 time to start up the process of getting data from the server
+      getExistingEntries();
+
+      function createEntry(id, img, msg) {
+        // create a new 'div' on the page with this ID
+        let tempDiv = document.createElement('div');
+        tempDiv.id = id;
+        tempDiv.classList.add('entry');
+
+        // create an image
+        let tempImg = document.createElement('img');
+        tempImg.src = img;
+        tempDiv.appendChild( tempImg );
+
+        // create a 'p' tag for the message
+        let tempP = document.createElement('p');
+        tempP.innerHTML = msg;
+        tempDiv.appendChild( tempP );
+
+        // add to the 'previous' div at the beginning
+        if (previous.children.length == 0) {
+          previous.appendChild( tempDiv );
+        }
+        else {
+          previous.insertBefore( tempDiv, previous.firstElementChild );
+        }
+      }
+
+      // save a new entry
+      saveButton.onclick = function(event) {
+
+        // grab the info the server needs to save this entry
+        let avatarImage = dropdown.value;
+        let messageText = message.value;
+
+        // make a fetch request to the server
+        performFetch({
+          method: 'POST',
+          url: 'saveentry.php',
+          data: {
+            message: messageText,
+            avatar: avatarImage
+          },
+          success: function(data, status) {
+            console.log("Success! Received this data from the server: ", data);
+            createEntry(data, avatarImage, messageText);
+          },
+          error: function(req, data, status) {
+            console.log("Error!");
+          }
+        })
+
+      }
+
+    </script>
+
+  </body>
+</html>

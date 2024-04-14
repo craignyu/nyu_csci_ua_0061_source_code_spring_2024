@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fetch Basics</title>
+    <style>
+        pre {
+            background-color: #eee;
+        }
+    </style>
+  </head>
+  <body>
+
+    <h1>Fetch Basics</h1>
+    
+    <button id="sendrequest">Send the fetch request</button>
+    <p>Output will appear below along with the time of the action in milliseconds.</p>
+    <pre id="output"></pre>
+
+    <!-- custom application code -->
+    <script>
+
+        // The Fetch API allows you to request information from the server without 
+        // asking the browser to perform a full CGI request.
+        //
+        // FEATURES OF A FETCH REQUEST
+        // * page does not need to refresh, so all JavaScript variables and 
+        //   states remain in tact
+        // * requests are initiated and handled through JavaScript
+        // * Fetch requests are asynchronus - you cannot assume that the server will
+        //   respond right away, so you have to wait to receive your result - because
+        //   of this the 'fetch' function will return a "promise" object, so one way to
+        //   handle this is to use the async / await keywords
+
+        // this is an async function - it has the ability to "pause" when waiting for
+        // data to become available from an asynchrous source
+        async function fetchTextFile() {
+            // attempt to run the following code. if a runtime error occurs, handle
+            // it in the 'catch' block below
+            try {
+                // 'await' data from the text file - this won't happen right away, so we
+                // will pause the execution of this function until the data becomes available
+                const result = await fetch('datasource1.txt');
+
+                // check to see if the result is OK
+                if (result.ok) {
+                    // use the result object to convert the response from the server to
+                    // plain text that we can use here on the front end. this is another
+                    // async operation, so we have to await the result again!
+                    const data = await result.text();
+                    output.innerText += Date.now() + ': received a response:\n';
+                    output.innerText += data + '\n';
+                }
+
+                // an error occured when attempting to get the text file
+                else {
+                    output.innerText += Date.now() + ': an error occurred\n';
+                }
+            }
+            // handle any runtime errors that occured in the 'try' block above
+            catch (e) {
+                output.innerText += Date.now() + ': an error occurred\n';
+            }
+        }
+
+        // get a reference to our output element
+        const output = document.getElementById('output');
+
+        // handle button press
+        document.querySelector('#sendrequest').onclick = function(e) {
+            output.innerText += Date.now() + ': sending ...\n';
+
+            // call the function
+            fetchTextFile();
+        }
+
+
+    </script>
+    
+  </body>
+</html>

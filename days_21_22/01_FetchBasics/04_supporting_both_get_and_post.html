@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fetch Basics</title>
+    <style>
+        pre {
+            background-color: #eee;
+        }
+    </style>
+  </head>
+  <body>
+
+    <h1>Fetch Basics: GET Convenience Function</h1>
+    
+    <button id="send_get_request">Send a GET request</button>
+    <button id="send_post_request">Send a POST request</button>
+    <p>Output will appear below along with the time of the action in milliseconds.</p>
+    <pre id="output"></pre>
+
+    <!-- custom application code -->
+    <script>
+
+        // let's create a simple convenience function that we can use to perform both 'GET' and 'POST' requests
+        async function performFetch(args) {
+            /* args is an object that is formatted as follows:
+
+              {
+                  // the URL to contact on the server
+                  url: url_to_contact
+
+                  // request method ('get' or 'post')
+                  method: 'get',
+
+                  // object of variables to send to the server
+                  data: {
+                      var1: value1,
+                      var2: value2,
+                      var3: value3 // ... etc
+                  },
+
+                  // function to run if request succeeds, should accept a single argument which is the data returned by the server
+                  success: function(data), 
+
+                  // function to run if request fails, should accept a single argument which is the error message
+                  error: function(error) 
+              }
+              
+            */
+
+            // GET requests
+            if (args.method && args.method.toLowerCase() === 'get') {
+                try {
+                    // package up the data to send to the server
+                    const params = new URLSearchParams();
+                    for (const varName in args.data) {
+                        params.append(varName, args.data[varName]);
+                    }
+
+                    // append variables to URL
+                    args.url += '?' + params.toString();
+
+                    // perform the fetch request
+                    const response = await fetch(args.url);
+
+                    if (response.ok) {
+                        const text = await response.text();
+                        args.success(text);
+                    } else {
+                        throw new Error("server error");
+                    }
+                } catch (error) {
+                    args.error(error);
+                }
+            } // end GET request
+            // POST requests
+            else if (args.method && args.method.toLowerCase() === 'post') {
+                try {
+                    // package up the data to send to the server
+                    // note that this is designed specifically to contact a PHP script
+                    // we will use a slightly different approach when we contact
+                    // node.js scripts in the next unit
+                    const formData = new FormData();
+                    for (const key in args.data) {
+                        if (args.data.hasOwnProperty(key)) {
+                            formData.append(key, args.data[key]);
+                        }
+                    }
+
+                    // perform the fetch request
+                    const response = await fetch(args.url, {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        const text = await response.text();
+                        args.success(text);
+                    } else {
+                        throw new Error("server error");
+                    }
+                } catch (error) {
+                    args.error(error);
+                }
+            } // end POST request
+        } // end performFetch function
+
+        
+        // get a reference to our output element
+        const output = document.getElementById('output');
+
+        // now we can easily call our convenience function every time we want to make 
+        // a request to the server
+        document.querySelector('#send_get_request').onclick = function(e) {
+            output.innerText += Date.now() + ': sending GET request...\n';
+
+            // now we can easily call our convenience function every time we want to make 
+            // a request to the server
+            performFetch({
+                url: 'datasource3_getvars.php',
+                method: 'GET',
+                data: {
+                    message: 'HelloThere!'
+                },
+                success: function(data) {
+                    output.innerText += Date.now() + ': received a response:\n';
+                    output.innerText += data + '\n';
+                },
+                error: function(err) {
+                    output.innerText += Date.now() + ': an error occurred\n';
+                    output.innerText += Date.now() + ': the error was: ' + err + '\n';
+                }
+            });
+        }
+
+        document.querySelector('#send_post_request').onclick = function(e) {
+            output.innerText += Date.now() + ': sending POST request...\n';
+
+            // now we can easily call our convenience function every time we want to make 
+            // a request to the server
+            performFetch({
+                url: 'datasource4_postvars.php',
+                method: 'POST',
+                data: {
+                    message: 'HelloThere!'
+                },
+                success: function(data) {
+                    output.innerText += Date.now() + ': received a response:\n';
+                    output.innerText += data + '\n';
+                },
+                error: function(err) {
+                    output.innerText += Date.now() + ': an error occurred\n';
+                    output.innerText += Date.now() + ': the error was: ' + err + '\n';
+                }
+            });
+        }        
+
+    </script>
+
+  </body>
+</html>

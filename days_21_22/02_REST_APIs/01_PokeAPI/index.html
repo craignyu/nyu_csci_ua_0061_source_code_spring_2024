@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Web Development</title>
+
+    <!-- bring in our helpers library, which will make available the 'performFetch' function -->
+    <script src="../helpers.js"></script>
+  </head>
+  <body>
+
+    <h1>Hello, Pokemon API</h1>
+
+    <p>View the source code and the console!</p>
+
+    <!-- custom application code -->
+    <script>
+
+        // the PokeAPI is an API that lets you programmatically get data about Pokemon!
+        // it's available here:  https://pokeapi.co/
+        // it has many, many functions - let's play around with a few
+
+        // task #1: query the API to learn about Pikachu
+        // endpoint:  https://pokeapi.co/api/v2/pokemon/{POKEMON_NAME}
+
+        // Example: make a request to the API to store a hit for this site (id #1)
+        performFetch({
+          url: 'https://pokeapi.co/api/v2/pokemon/pikachu',
+          method: 'get',
+          success: function(data) {
+
+            // this will be a huge JSON string of data about this pokemon
+            console.log("success");
+
+            // convert data into a JSON object
+            data = JSON.parse(data);
+            console.log(data);
+
+            // there's a sprites property in here that has image references!  let's add some images
+            if (data.sprites) {
+              // visit every property in this object
+              for (let s in data.sprites) {
+                // if it's not null and it's a string
+                if (data.sprites[s] && typeof(data.sprites[s]) == 'string') {
+                  let t =  document.createElement('img');
+                  t.src = data.sprites[s];
+                  document.querySelector('body').appendChild(t);
+                }
+              }
+            }
+          },
+          error: function(error)  {
+            console.log("error:");
+            console.log(error);
+          }
+        });
+
+
+
+    </script>
+
+
+  </body>
+</html>

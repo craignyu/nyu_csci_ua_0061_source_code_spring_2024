@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fetch Basics</title>
+    <style>
+        pre {
+            background-color: #eee;
+        }
+    </style>
+  </head>
+  <body>
+
+    <h1>Fetch Basics: Sending GET Variables</h1>
+    
+    <button id="sendrequest">Send the fetch request</button>
+    <p>Output will appear below along with the time of the action in milliseconds.</p>
+    <pre id="output"></pre>
+
+    <!-- custom application code -->
+    <script>
+
+        // in this example we are going to send some GET variables to a PHP script
+        // using a fetch request. we will do this by attaching them to the URL
+
+        // this is an async function - it has the ability to "pause" when waiting for
+        // data to become available from an asynchrous source
+        async function fetchSendGetVariablesToPHP() {
+            // attempt to run the following code. if a runtime error occurs, handle
+            // it in the 'catch' block below
+            try {
+                // 'await' data from the text file - this won't happen right away, so we
+                // will pause the execution of this function until the data becomes available
+                const result = await fetch('datasource3_getvars.php?message=HelloWorld!');
+
+                // check to see if the result is OK
+                if (result.ok) {
+                    // use the result object to convert the response from the server to
+                    // plain text that we can use here on the front end. this is another
+                    // async operation, so we have to await the result again!
+                    const data = await result.text();
+                    output.innerText += Date.now() + ': received a response:\n';
+                    output.innerText += data + '\n';
+                }
+                // an error occured when attempting to access the PHP file
+                else {
+                    output.innerText += Date.now() + ': an error occurred\n';
+                }
+            }
+            // handle any runtime errors that occured in the 'try' block above
+            catch (e) {
+                output.innerText += Date.now() + ': an error occurred\n';
+            }
+        }
+
+        // get a reference to our output element
+        const output = document.getElementById('output');
+
+        // handle button press
+        document.querySelector('#sendrequest').onclick = function(e) {
+            output.innerText += Date.now() + ': sending ...\n';
+
+            // call the function
+            fetchSendGetVariablesToPHP();
+        }
+
+
+    </script>
+    
+  </body>
+</html>

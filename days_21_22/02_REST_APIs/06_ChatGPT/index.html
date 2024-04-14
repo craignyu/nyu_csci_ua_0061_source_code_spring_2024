@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Web Development</title>
+
+    <!-- bring in our helpers library, which will make available the 'performFetch' function -->
+    <script src="../helpers.js"></script>
+
+    <style>
+      #input_container {
+        display: flex;
+      }
+      #usermessage {
+        flex: 1 1 auto;
+      }
+      #button_send {
+        flex: 0 1 auto;
+      }
+      #response {
+        font-size: 150%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>Hello, Chat GPT API</h1>
+
+    <div id="input_container">
+      <input type="text" id="usermessage">
+      <button id="button_send">Send Message to Open AI API</button>
+    </div>
+    
+    <hr>
+
+    <div id="response"></div>
+
+    <!-- custom application code -->
+    <script>
+
+        // some DOM references
+        const usermessage = document.querySelector('#usermessage');
+        const button_send = document.querySelector('#button_send');
+        const response = document.querySelector('#response');
+
+        // the Open AI API lets you work with various machine learning models,
+        // including Chat GPT and other large language models
+        // the API requires a few things:
+        // (1) you have an account with Open AI
+        // (2) you have a credit card on file
+        // calls to the Open AI APIs cost money, though there is a free tier
+        // that you can take advantage of before you begin getting charged.
+
+        // Here's how to get started:
+        // (1) visit https://platform.openai.com/docs/api-reference
+        // (2) click Log In
+        // (3) log in using your Open AI account
+        // (4) click on your name at the top-right side of the screen
+        //     and select "View API keys"
+        // (5) create a new secret key
+        // (6) copy this secret key and paste it into 'proxy.php'
+        // (7) use the JavaScript fetch API to contact 'proxy.php' which 
+        //     will call the Open AI API for us
+
+
+        // when the user clicks on the button
+        button_send.onclick = function(e) {
+
+          // grab the text from the usermessage input box
+          const userText = usermessage.value;
+
+          // populate a 'waiting' message
+          response.innerText = 'Sending message to proxy server ...';
+
+          // contact our proxy server
+          performFetch({
+            url: 'proxy.php',
+            method: 'POST',
+            data: {
+              usermessage: userText
+            },
+            success: function(data) {
+              response.innerText = data;
+            },
+            error: function(error) {
+              response.innerText = error;
+            }
+          });
+
+        };
+
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Web Development</title>
+
+    <!-- bring in our helpers library, which will make available the 'performFetch' function -->
+    <script src="../helpers.js"></script>
+
+    <style>
+      .panel {
+        width: 30%;
+        margin: 1%;
+        box-sizing: border-box;
+        border: 2px solid black;
+        padding: 10px;
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>Hello, Custom API</h1>
+
+    <div class="panel">
+      <h3>Cast a New Vote</h3>
+      <select id="newvote">
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="yellow">Yellow</option>
+      </select>
+      <button id="castvote">Cast Vote</button>
+      <div id="castvoteresult"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Obtain All Previous Votes</h3>
+      <button id="obtainpreviousvotes">Get Votes</button>
+      <div id="obtainpreviousvotesresult"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Get Vote Count by Value</h3>
+      <select id="votecount">
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="yellow">Yellow</option>
+      </select>
+      <button id="votecountbutton">Get Vote Count</button>
+      <div id="votecountresult"></div>
+    </div>
+
+
+    <!-- custom application code -->
+    <script>
+
+        // "API" stands for "application programming interface"
+        // APIs are well-defined libraries that can be used to access services that exist outside of your applications
+        // In web programming, we often use what's called a REST API (Representational State Transfer)
+        // In short, a REST API has the following characteristics:
+        // 1. They expose an 'endpoint' (a URL) that can be used to communicate with the service
+        // 2. They accept data via an HTTP request (GET or POST)
+        // 3. They return data via an HTTP request
+
+        // I've written a simple API that handles the back-end logic of a "voting" system - see the 'vote.php' file for a full description
+        // this API can be used to store votes, retrieve all previous votes or search for votes of a particular type
+        // the API requires one piece of information to operate:
+        //   - the command (store, get_all_votes, get_vote_count_by_value)
+        // certain API calls require an additional piece of information:
+        //   - the value to be stored or searched
+        // the API has a single end point that can be accessed at 'vote.php'
+        // all commands are sent via a GET request (attached to the URL)
+
+        // Demo #1: cast a vote
+        document.querySelector("#castvote").onclick = function(event) {
+
+          // get form data
+          let newVote = document.querySelector('#newvote').value;
+
+          // initiate a fetch request to store this vote on the server
+          performFetch({
+            url: 'vote.php',
+            method: 'GET',
+            data: {
+              command: 'store',
+              value: newVote
+            },
+            success: function(data) {
+              console.log(data);
+              if (data == 'ok') {
+                document.querySelector('#castvoteresult').innerHTML = 'Vote recorded';
+              }
+              else {
+                document.querySelector('#castvoteresult').innerHTML = 'Something went wrong ...';
+              }
+            },
+            error: function(error) {
+              console.log("ERROR: " + error);
+              document.querySelector('#castvoteresult').innerHTML = 'Something went wrong ...';
+            }
+          })
+
+        }
+
+
+        // Demo #2: Get all previous votes
+        document.querySelector('#obtainpreviousvotes').onclick = function(event) {
+
+          // initiate an AJAX call to obtain all data from the server
+          performFetch({
+            url: 'vote.php',
+            method: 'GET',
+            data: {
+              command: 'get_all_votes'
+            },
+            success: function(data) {
+              console.log(data);
+
+              // API call failed
+              if (data == 'error') {
+                document.querySelector('#obtainpreviousvotesresult').innerHTML = 'Something went wrong ...';
+              }
+              // good data
+              else {
+                // contain to hold output
+                let ref = document.querySelector('#obtainpreviousvotesresult');
+                ref.innerHTML = '';
+
+                // convert the string into an object
+                let info = JSON.parse(data);
+
+                for (let key in info) {
+                  ref.innerHTML += key + ' = ' + info[key] + '<br>';
+                }
+              }
+            },
+            error: function(error) {
+              console.log("ERROR: " + error);
+              document.querySelector('#obtainpreviousvotesresult').innerHTML = 'Something went wrong ...';
+            }
+          })
+
+        }
+
+
+        // Demo #3: Get votes by specific value
+        document.querySelector("#votecountbutton").onclick = function(event) {
+
+          // get form data
+          let searchVote = document.querySelector('#votecount').value;
+
+          // initiate an AJAX call to store this vote on the server
+          performFetch({
+            url: 'vote.php',
+            method: 'GET',
+            data: {
+              command: 'get_vote_count_by_value',
+              value: searchVote
+            },
+            success: function(data) {
+              console.log(data);
+              if (data == 'error') {
+                document.querySelector('#votecountresult').innerHTML = 'Something went wrong ...';
+              }
+              else {
+                document.querySelector('#votecountresult').innerHTML = data;
+              }
+            },
+            error: function(error) {
+              console.log("ERROR: " + error);
+              document.querySelector('#votecountresult').innerHTML = 'Something went wrong ...';
+            }
+          })
+
+        }
+
+    </script>
+
+  </body>
+</html>

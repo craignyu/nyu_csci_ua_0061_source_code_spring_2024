@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Web Development</title>
+
+    <!-- bring in our helpers library, which will make available the 'performFetch' function -->
+    <script src="../helpers.js"></script>
+
+    <style>
+      #result {
+        display: none;
+      }
+
+      #error {
+        display: none;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <h1>Pokemon Search</h1>
+
+    <div id="form">
+      Search for a Pokemon: <input type="text" id="query"><button id="search">Search</button>
+    </div>
+
+    <h3 id="error">This Pokemon doesn't exist</h3>
+
+    <div id="result">
+      <h3 id="pokemon_name"></h3>
+      <img src="#" id="pokemon_image">
+
+      <h4>Type(s)</h4>
+      <ul id="pokemon_types">
+      </ul>
+
+      <h4>Abilities</h4>
+      <ul id="pokemon_abilities">
+      </ul>
+
+      <h4>Videos</h4>
+      <div id="videos"></div>
+      <div id="player"></div>
+    </div>
+
+
+    <!-- custom application code -->
+    <script>
+
+        // some DOM references
+        let query = document.getElementById('query');
+        let search = document.getElementById('search');
+        let error = document.getElementById('error');
+        let result = document.getElementById('result');
+        let pokemon_name = document.getElementById('pokemon_name');
+        let pokemon_image = document.getElementById('pokemon_image');
+        let pokemon_types = document.getElementById('pokemon_types');
+        let pokemon_abilities = document.getElementById('pokemon_abilities');
+        let videos = document.getElementById('videos');
+        let player = document.getElementById('player');
+
+        // get your credentials:
+        // 1. visit https://console.developers.google.com
+        // 2. click the drop down carrot at the top of the screen, to the right
+        //    of the "Google Cloud Platform" header graphic
+        // 3. click "New Project"
+        // 4. give your project a name and select your "NYU-GCP-Personal-Projects" location
+        //    from the drop down list in the Location field.  Then click "Create"
+        // 5. a notification will appear at the top right side of the page -
+        //    click on the newly created project title
+        // 6  click on "+ Enable APIs and Services" at the top of the page
+        // 7. search for YouTube
+        // 8. click on the "YouTube Data API v3" link that appears
+        // 9. click the Enable button
+        // 10. click the Credentials link on the left side of the screen
+        // 11. click "+ Create Credentials" and select an API key
+        // 12. copy the string that appears and hit close (you can get this
+        //     later if you ever need it)
+        // 13. paste the API key into the variable below
+
+        // API key (put yours here)
+        let apiKey = 'YOUR_API_KEY_GOES_HERE';
+
+        // listen for searches
+        search.addEventListener('click', function(event) {
+
+          // hide the error and result divs
+          error.style.display = 'none';
+          result.style.display = 'none';
+
+          // query the PokeAPI for info about this pokemon
+          performFetch({
+            url: 'https://pokeapi.co/api/v2/pokemon/'+query.value,
+            method: 'get',
+            success: function(data) {
+              // convert data into a JSON object
+              data = JSON.parse(data);
+
+              result.style.display = 'block';
+              pokemon_name.innerHTML = data.name;
+              pokemon_image.src = data.sprites.front_default;
+
+              while (pokemon_types.children.length > 0) {
+                pokemon_types.removeChild( pokemon_types.children[0]);
+              }
+              for (let i = 0; i < data.types.length; i++) {
+                let t = document.createElement('li');
+                t.innerHTML = data.types[i].type.name;
+                pokemon_types.appendChild(t);
+              }
+
+              while (pokemon_abilities.children.length > 0) {
+                pokemon_abilities.removeChild( pokemon_abilities.children[0]);
+              }
+              for (let i = 0; i < data.abilities.length; i++) {
+                let t = document.createElement('li');
+                t.innerHTML = data.abilities[i].ability.name;
+                pokemon_abilities.appendChild(t);
+              }
+
+              // also query the YouTube search API to find youtube videos about this pokemon
+              while (videos.children.length > 0) {
+                videos.removeChild( videos.children[0]);
+              }
+
+              // initiate a search for a video
+              performFetch({
+                url: 'https://www.googleapis.com/youtube/v3/search',
+                method: 'GET',
+                data: {
+                  part: 'snippet',
+                  q: query.value,
+                  key: apiKey
+                },
+                success: function(data) {
+                  // convert data into a JSON object
+                  data = JSON.parse(data);
+
+                  // if some items came back from the search
+                  if (data.items) {
+                    // loop over the items and display their thumbnails
+                    for (let i =  0; i < data.items.length; i++) {
+                      console.log(data.items[i].snippet.thumbnails.default);
+                      let img = document.createElement('img');
+                      img.src = data.items[i].snippet.thumbnails.default.url;
+                      img.width = data.items[i].snippet.thumbnails.default.width;
+                      img.height = data.items[i].snippet.thumbnails.default.height;
+                      img.dataset.videoId = data.items[i].id.videoId;
+                      img.onclick = function(event) {
+                        // remove all previous videos
+                        while (player.children.length > 0) {
+                          player.firstElementChild.remove();
+                        }
+                        
+                        console.log("https://www.youtube.com/watch?v="+event.currentTarget.dataset.videoId)
+
+                        let iframe = document.createElement('iframe');
+                        iframe.width =
+                        iframe.src = 'https://www.youtube.com/embed/' + event.currentTarget.dataset.videoId;
+                        player.appendChild(iframe);
+
+
+                      }
+                      videos.appendChild(img);
+                    }
+                  }
+                },
+                error: function(error) {
+                  console.log(error);
+                }
+              });
+
+
+
+
+            },
+            error: function(error) {
+              console.log(error);
+              error.style.display = 'block';
+            }
+          });
+
+        });
+
+
+
+
+    </script>
+
+
+  </body>
+</html>
