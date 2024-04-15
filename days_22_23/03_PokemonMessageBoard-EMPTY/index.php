@@ -59,14 +59,10 @@
     -->
 
 
-    <!-- bring in the jQuery library -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
     <!-- custom application code -->
     <script>
 
-      // when jQuery & the page are ready to go
-      $(document).ready(function() {
+        // wait until the page is fully ready to go
 
         // dom refs
         var dropdown = document.getElementById('pokemon');
@@ -74,9 +70,45 @@
         var saveButton = document.getElementById('save');
         var previous = document.getElementById('previous');
 
+        // TODO implement a function to contact the server and create a new entry 
+        saveButton.onclick = function(e) {
+
+        }
+
+        // TODO: implement a function to contact the server and retrieve all previously added messages and display them to the page
 
 
-      })
+        // TODO: call this function once when the pages loads
+
+
+        // TODO: schedule this function to run regularly to obtain any new entries
+
+
+        // given: a helper function to create new entries on the client side (DOM mechanics)
+        function createEntry(id, img, msg) {
+            // create a new 'div' on the page with this ID
+            let tempDiv = document.createElement('div');
+            tempDiv.id = id;
+            tempDiv.classList.add('entry');
+
+            // create an image
+            let tempImg = document.createElement('img');
+            tempImg.src = img;
+            tempDiv.appendChild( tempImg );
+
+            // create a 'p' tag for the message
+            let tempP = document.createElement('p');
+            tempP.innerHTML = msg;
+            tempDiv.appendChild( tempP );
+
+            // add to the 'previous' div at the beginning
+            if (previous.children.length == 0) {
+                previous.appendChild( tempDiv );
+            }
+            else {
+                previous.insertBefore( tempDiv, previous.firstElementChild );
+            }
+        }
 
     </script>
 
